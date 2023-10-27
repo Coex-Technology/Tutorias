@@ -1,0 +1,147 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+
+.barra_desplazamiento{
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+  }
+
+td {
+    border-bottom: 1px solid #ccc;
+}
+
+/* login */
+
+.main-container{        /* centrar login (Sistema de Tutorías) */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container > .login,
+.main-container > .hero-body{      /* Tamaño del login */
+    height: auto;
+    width: 100%;
+    max-width: 550px;
+    min-width: 50px;
+}
+
+.form-inline{
+    display: inline-flex;
+}
+
+.section{
+    margin: 20px;
+    padding: 20px;
+}
+
+.separacion_user_update{
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+.contenedor_caja{
+    background-color: #dee8f0;      /* #d3edff -> celeste*/
+}
+
+/* tutorias, registro y nuevo usuario */
+
+.contenedor_alerta{
+    display: flex;
+    justify-content: flex-start;
+    padding: 0vh;
+}
+
+.mensaje_alerta{
+    width: 50vh !important;
+    height: auto !important;
+    position: absolute !important;
+    right: 50% !important;
+    left: 30% !important;
+}
+
+.asterisco{
+    color: rgb(223, 18, 18);
+}
+
+.borde_registro{
+    margin: 0 10vh 0 10vh;
+}
+
+
+.register_guardar{
+    z-index: 99;
+    justify-content: flex-end;
+    position: absolute;
+    left: 42%;
+    top: 50%;
+    transform: translate(-50%);
+    width: 200px;
+    height: 100px;
+}
+
+.register_confirmacion{
+    width: 30vh !important;
+    margin-top: 100hv !important;
+    height: auto !important;
+    position: fixed !important;
+    right: 10vh !important;
+}
+
+/* usuario_eliminar */
+
+.tabla_encabezado {
+    background-color: rgba(199, 194, 194, 0.5);
+}
+
+.tabla_titulo {
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+}
+
+.tabla_texto {
+    vertical-align: middle !important;
+}
+
+/* tutorias */
+
+.tutoria_guardar{
+    margin-left: 14vh;
+}
+
+/* registrarse */
+
+.regresar{
+    position: relative;
+    right: 0;
+    margin-top: 50vh;
+    margin-right: 187vh;
+}
+
+.regresar:hover a.guardar, .regresar a {
+    color: white;
+}
+
+.telefonos{
+    max-width: 33vh;
+}
+
+.contactos{
+    max-width: 63vh;
+}
+
+/* login */
+
+.login_fondo {
+    background-image: url('../img/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}

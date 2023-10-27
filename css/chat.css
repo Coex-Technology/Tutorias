@@ -1,0 +1,63 @@
+body, html {
+  overflow: hidden;
+}
+
+/* chat_docente.php */
+
+
+
+.boton_izquierda{
+  margin-right: 440px;
+}
+
+.five-fifths {
+  flex: 3;
+}
+
+.one-fifth {
+  flex: 1;
+}
+
+.texto_contenedor {
+  display: flex;
+}
+
+.contenedor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.margen_chat{
+  margin-left: 200px;
+}
+
+p{
+  float: right;
+  color: black;
+  font-size: 14px;
+  margin-top: 20px; 
+}
+
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.caja{
+  width: 500px;
+}
+
+.mensaje {
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}
+
+.boton {
+  margin-left: 425px;
+}

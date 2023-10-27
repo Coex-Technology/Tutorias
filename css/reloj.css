@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.fondo{
+    background: url(../img/fondo_reloj.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 50vh;
+    margin-left: 25vh;
+    margin-top: 8vh;
+}
+
+.reloj_body {
+    background-attachment: fixed;
+    background-color: transparent;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.parrafo{
+    font-family: Oswald, Arial;
+    text-align: center;
+    font-size: 1em;
+}
+
+.wrap {
+    width: 100%;
+    max-width: 1000px;
+    /* margin: auto; */
+}
+
+.widget {
+    width: 83%;
+    margin: 2em;
+    /* margin: 32px; */
+}
+
+.widget p {
+    display: inline-block;
+    line-height: 1em;
+}
+
+.fecha {
+    font-family: Oswald, Arial;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 0.3125rem;
+    /* margin-bottom: 5px; */
+    background: rgba(0,0,0,.5);
+    padding: 20px;
+    width: 100%;
+}
+
+.reloj {
+    font-family: Oswald, Arial;
+    width: 100%;
+    padding: 20px;
+    font-size: 4em;
+    text-align: center;
+    background: rgba(0,0,0,.5);
+}
+
+.reloj .caja-segundos {
+    display: inline-block;
+}
+
+.reloj .segundos,
+.reloj .ampm {
+    font-size: 2rem;
+    display: block;
+}

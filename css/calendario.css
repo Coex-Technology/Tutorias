@@ -1,0 +1,104 @@
+/* horarios_tutorias.php */
+
+.horarios_bajar_archivo{
+    margin-top: 90px;
+}
+
+.horarios_bajar_tabla{
+    margin-top: 150px;
+    margin-right: 62px;
+    margin-left: 62px;
+}
+
+.mover_actualizar_derecha{
+    margin-left: 900px;
+    margin-top: 10px;
+}
+
+.bajar_contenido{
+    margin-bottom: 70px;
+}
+
+/* fecha_examen.php */
+
+.examen_tabla{
+    width: calc(100% - 160px); /* Ancho del 100% menos 80px a la derecha e izquierda */
+    margin: 0 80px; /* Margen de 80px a la derecha e izquierda */
+    background-color: lightgray;
+    border: 1px solid gray;
+    box-sizing: border-box; /* Incluir bordes y relleno en el ancho total */
+    float: left; /* Flotar el contenedor a la izquierda */
+}
+
+/* calendario.php */
+
+.calendario_espacio{
+    width: 900px;
+    height: auto;
+}
+
+.contenedor_caja{
+    background-color: #d3edff;
+}
+
+.mes-anio {
+    font-size: 18px;
+    color:#000;
+}
+
+.calendario .dias .dia.otro-mes {
+    color: #ad3939;
+    font-weight: bold;
+}
+
+.dia{
+    color:#000;
+    
+}
+
+
+.calendario .dias .dia.hoy {
+    background-color: #d3edff;
+}
+
+.calendario .mes {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.calendario .dias-semana {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.calendario .dias-semana .dia {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.flecha_izquierda {
+    left: 17em;
+  }
+
+.flecha_derecha {
+    right: 17em;
+}
+
+.flecha_izquierda,
+  .flecha_derecha {
+    position: absolute;
+}
+
+.calendario .dias {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendario .dias .dia {
+    flex-basis: 14.28%;
+    text-align: center;
+    padding: 10px 0;
+}

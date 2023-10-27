@@ -1,0 +1,109 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+
+.sin_barra{
+    overflow: hidden;
+}
+
+.seccion{
+    padding-top: 2vh !important;
+    padding-bottom: 0px !important;
+}
+
+.comentarios{
+    padding-bottom: 20vh;
+}
+
+.comentarios_titulo{
+    position: relative;
+    margin-top: 6vh;
+    margin-bottom: 2vh;
+}
+
+.comentarios_texto, .estudiantes_texto{
+    max-height: 40vh;
+    overflow: auto;
+    margin-right: 5vh;
+}
+
+.estudiantes_texto{
+    max-height: 60vh;
+}
+
+.botones{
+    position: relative;
+    margin-top: 11vh;
+}
+
+.eliminar{
+    margin-right: 53vh;
+}
+
+.comentarios_texto, .comentarios_titulo, .botones{
+    margin-left: 2vh;
+}
+
+@media (min-width: 768px){
+    .section{
+        padding-top: 3vh;
+        padding-left: 3vh;
+    }
+}
+
+@media (max-width: 768px){
+    .comentarios_texto, .comentarios_titulo{
+        position: relative;
+        max-height: 40vh;
+        overflow: hidden;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .sin_barra{
+        overflow: auto;
+    }
+    .comentarios{
+        margin-right: 0px;
+        padding-bottom: 7vh;
+    }
+    .botones{
+        margin-top: 0px;
+    }
+    .eliminar{
+        margin-right: 13vh;
+    }
+}
+
+.bajar_archivo_boton{
+    margin-top: 20px;
+    margin-right: 72px;
+}
+
+.contenedor_caja{
+    background-color: #dee8f0;      /* #d3edff -> celeste*/
+}
+
+
+/* subir_archivo.php */
+
+.option{
+    color: beige;
+}
+
+.bajar_archivo_descripcion{
+    margin-top: 90px;
+    margin-right: 62px;
+    margin-left: 62px;
+}
+
+.ajustar_boton_salir{
+    margin-top: 55px;
+    margin-left: 100px;
+}
+
+.ajustar_boton_subir{
+    margin-top: 55px;
+    margin-left: 550px;
+}

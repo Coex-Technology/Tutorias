@@ -1,0 +1,117 @@
+body{
+    overflow: auto;
+}
+
+.titulo{
+    font-size: 25px;
+}
+
+.puntos_suspensivos {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.main{
+    margin-left: 6vh;
+    margin-right: 6vh;
+}
+
+
+.tabla_espacio_izquierdo{
+    margin-left: 60px;
+}
+
+.tabla_espacio_derecho{
+    margin-right: 60px;
+}
+
+.borde{
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.contenedor_edututor{
+    display: flex;
+    justify-content: center;
+    margin-right: 10vh;
+}
+
+.img_edututor{
+    object-fit: contain;
+    height: 5vh;
+    width: 30vh;
+}
+
+.cartel_home{
+    padding-left: 10vh;
+}
+
+.bajar_tabla_tutorias{
+    padding-top: 5vh;
+    padding-left: 10vh;    
+    padding-right: 7vh;
+}
+
+.bajar_tabla_opciones{
+    padding-top: 10vh;
+    margin-left: 2vh;
+}
+
+.menu-ancho{
+    width: 100%;
+}
+
+/* Menu Opciones */
+
+.hidden-opciones {
+    display: none;
+}
+
+.dark {
+    background-color: #333; /* Puedes ajustar el color a tu preferencia */
+    color: #fff; /* Color de texto en el fondo oscuro */
+}
+
+/* Lista de Tutorías */
+
+.table.is-fullwidth {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table.is-fullwidth th,
+.table.is-fullwidth td:not(.contenedor_opciones) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table.is-fullwidth {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table.is-fullwidth th,
+.table.is-fullwidth td:not(.opcion) {
+    width: auto;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contenedor_opciones{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: auto;
+}
+
+.opciones{
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 2vw;
+}
