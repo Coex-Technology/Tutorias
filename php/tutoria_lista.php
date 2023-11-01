@@ -4,33 +4,129 @@
 	$ci_usuario = $_SESSION['ci'];
 	$colspan = 9;
 	$pagina_actual = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	$home = stripos($pagina_actual, 'home') !== false;
+	$home = (stripos($pagina_actual, 'home') !== false);
 	$tutorship_list = stripos($pagina_actual, 'tutorship_list') !== false;
 	$historial_tutorias = stripos($pagina_actual, 'historial_tutorias') !== false;
-	
+
+	$administrador = $_SESSION['usuarios_tipos_id'] == 1;
+	$docente = $_SESSION['usuarios_tipos_id'] == 2;
+	$estudiante = $_SESSION['usuarios_tipos_id'] == 3;
+
+	if($administrador){
+		$usuario_tipo = "Docente";
+
+		$consulta_datos = "SELECT
+				(SELECT nombre FROM usuarios WHERE ci = tutorias.docente_ci) AS nombre_docente,
+                (SELECT apellido FROM usuarios WHERE ci = tutorias.docente_ci) AS apellido_docente,
+				usuarios.direccion AS direccion,
+				usuarios.registrado AS registrado,
+				usuarios.activo AS activo,
+				tutorias.id AS id,
+				tutorias.docente_ci AS docente_ci,
+				tutorias.administrador_ci AS administrador_ci,
+				tutorias.grupo AS grupo,
+				tutorias.descripcion AS descripcion,
+				tutorias.dias AS dias,
+				tutorias.fecha_inicial AS fecha_inicial,
+				tutorias.fecha_final AS fecha_final,
+				tutorias.hora_inicial AS hora_inicial,
+				tutorias.hora_final AS hora_final,
+				tutorias.activa AS activa,
+				tutorias_tipos.id AS tutorias_tipos_id,
+				tutorias_tipos.nombre_tipo AS nombre_tipo
+			FROM tutorias
+			JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
+			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+			WHERE tutorias.administrador_ci = $ci_usuario
+			ORDER BY nombre ASC LIMIT $inicio, $registros;";
+
+		$consulta_total = "SELECT COUNT(*)
+			FROM tutorias
+			JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
+			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+			WHERE usuarios.ci = $ci_usuario
+			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
 
 
-	if(isset($busqueda) && $busqueda!=""){
 
-		$consulta_datos="SELECT * FROM tutorias WHERE (grupo LIKE '%$busqueda%' OR apellido LIKE '%$busqueda%' OR telefono LIKE '%$busqueda%' OR email LIKE '%$busqueda%' OR direccion LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
+	}elseif($docente){
+		$usuario_tipo = "Admin.";
 
-		$consulta_total="SELECT COUNT(ci) FROM tutorias WHERE (grupo LIKE '%$busqueda%' OR apellido LIKE '%$busqueda%' OR telefono LIKE '%$busqueda%' OR email LIKE '%$busqueda%' OR direccion LIKE '%$busqueda%')";
+		$consulta_datos = "SELECT 
+				(SELECT nombre FROM usuarios WHERE ci = tutorias.administrador_ci) AS nombre_administrador,
+                (SELECT apellido FROM usuarios WHERE ci = tutorias.administrador_ci) AS apellido_administrador,
+				usuarios.direccion AS direccion,
+				usuarios.registrado AS registrado,
+				usuarios.activo AS activo,
+				tutorias.id AS id,
+				tutorias.docente_ci AS docente_ci,
+				tutorias.administrador_ci AS administrador_ci,
+				tutorias.grupo AS grupo,
+				tutorias.descripcion AS descripcion,
+				tutorias.dias AS dias,
+				tutorias.fecha_inicial AS fecha_inicial,
+				tutorias.fecha_final AS fecha_final,
+				tutorias.hora_inicial AS hora_inicial,
+				tutorias.hora_final AS hora_final,
+				tutorias.activa AS activa,
+				tutorias_tipos.id AS tutorias_tipos_id,
+				tutorias_tipos.nombre_tipo AS nombre_tipo
+			FROM tutorias
+			JOIN usuarios ON tutorias.docente_ci = usuarios.ci
+			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+			WHERE usuarios.ci = $ci_usuario
+			ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
-	}else{
-		
-		if(stripos($pagina_actual, 'tutorship_list') || stripos($pagina_actual, 'home') !== false){
-			$consulta_datos = "SELECT * FROM tutorias JOIN usuarios ON usuarios.ci = tutorias.docente_ci OR usuarios.ci = tutorias.administrador_ci JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id WHERE ci = $ci_usuario ORDER BY grupo ASC LIMIT $inicio, $registros";
+		$consulta_total = "SELECT COUNT(*)
+			FROM tutorias
+			JOIN usuarios ON tutorias.docente_ci = usuarios.ci
+			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+			WHERE usuarios.ci = $ci_usuario
+			ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
-			$consulta_total = "SELECT COUNT(*) AS cantidad_resultados FROM tutorias JOIN usuarios ON usuarios.ci = tutorias.docente_ci OR usuarios.ci = tutorias.administrador_ci JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id WHERE ci = $ci_usuario ORDER BY grupo ASC LIMIT $inicio, $registros";
-		
 
-		}elseif(stripos($pagina_actual, 'historial_tutorias') !== false){
-			$consulta_datos = "SELECT * FROM tutorias JOIN usuarios ON usuarios.ci = tutorias.docente_ci OR usuarios.ci = tutorias.administrador_ci JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id WHERE ci = $ci_usuario ORDER BY grupo ASC LIMIT $inicio, $registros";
+	}elseif($estudiante){
+		$usuario_tipo = "";
 
-			$consulta_total = "SELECT COUNT(*) AS cantidad_resultados FROM tutorias JOIN usuarios ON usuarios.ci = tutorias.docente_ci OR usuarios.ci = tutorias.administrador_ci JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id WHERE ci = $ci_usuario ORDER BY grupo ASC LIMIT $inicio, $registros";
-		}
-		
+		$consulta_datos = "SELECT
+                (SELECT nombre FROM usuarios WHERE ci = tutorias.docente_ci) AS nombre_docente,
+                (SELECT apellido FROM usuarios WHERE ci = tutorias.docente_ci) AS apellido_docente,
+                (SELECT nombre FROM usuarios WHERE ci = tutorias.administrador_ci) AS nombre_administrador,
+                (SELECT apellido FROM usuarios WHERE ci = tutorias.administrador_ci) AS apellido_administrador,
+                usuarios.direccion AS direccion,
+                usuarios.registrado AS registrado,
+                usuarios.activo AS activo,
+                tutorias.id AS id,
+                tutorias.docente_ci AS docente_ci,
+                tutorias.administrador_ci AS administrador_ci,
+                tutorias.grupo AS grupo,
+                tutorias.descripcion AS descripcion,
+                tutorias.dias AS dias,
+                tutorias.fecha_inicial AS fecha_inicial,
+                tutorias.fecha_final AS fecha_final,
+                tutorias.hora_inicial AS hora_inicial,
+                tutorias.hora_final AS hora_final,
+                tutorias.activa AS activa,
+                tutorias_tipos.id AS tutorias_tipos_id,
+                tutorias_tipos.nombre_tipo AS nombre_tipo
+            FROM tutorias_estudiantes
+            JOIN usuarios ON tutorias_estudiantes.estudiantes_ci = usuarios.ci
+            JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
+            JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+            WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario
+            ORDER BY nombre ASC LIMIT $inicio, $registros;";
+
+
+		$consulta_total = "SELECT COUNT(*)
+			FROM tutorias_estudiantes
+			JOIN usuarios ON tutorias_estudiantes.estudiantes_ci = usuarios.ci
+			JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
+			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+			WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario
+			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
+
 	}
+
 
 	$conexion=conexion();
 
@@ -61,33 +157,83 @@
 			<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 				<thead>';
 
-	if($historial_tutorias)
-    $tabla.='	
-					<tr class="has-text-centered is-vcentered tabla_encabezado">
-						<th colspan="10"> <p class="tabla_titulo"> Lista de Tutorías </p> </th>
+	if($home && $estudiante)
+    $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
+						<th colspan="5"> <p class="tabla_titulo"> Tutorías </p> </th>
 					</tr>';
+
+	if($home && !($estudiante))
+    $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
+						<th colspan="7"> <p class="tabla_titulo"> Tutorías </p> </th>
+					</tr>';
+
+	if($tutorship_list && !($estudiante))
+    $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
+						<th colspan="11"> <p class="tabla_titulo"> Lista de Tutorías </p> </th>
+					</tr>';
+
+	if($tutorship_list && $estudiante)
+	$tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
+						<th colspan="9"> <p class="tabla_titulo"> Lista de Tutorías </p> </th>
+					</tr>';
+
+	if($historial_tutorias && !($estudiante))
+    $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
+						<th colspan="9"> <p class="tabla_titulo"> Lista de Tutorías </p> </th>
+					</tr>';
+
 
 	$tabla.=' 		<tr class="has-text-centered">';
 	
-	if($historial_tutorias)
-	$tabla.='
-						<th class="tabla_texto"> Administrador </th>
-						<th class="tabla_texto"> Docente </th>';
+	if(($home) && (!($total>=1))){
+		$tabla.='
+						<th class="tabla_texto" colspan="7"> Usuario no Ingresado </th>';
 
-	$tabla.='
-						<th class="tabla_texto"> Tutoría </th>
+	}elseif($home && !($estudiante))
+	$tabla.='			<th class="tabla_texto"> Grupo </th>
+						<th class="tabla_texto"> '.$usuario_tipo.'</th>
 						<th class="tabla_texto"> Dias </th>
-						<th class="tabla_texto"> Tipo </th>
+						<th class="tabla_texto"> Periodo </th>';
+
+
+	if($home && ($estudiante))
+	$tabla.='			<th class="tabla_texto"> Grupo </th>
+						<th class="tabla_texto"> Admin. </th>
+						<th class="tabla_texto"> Docente </th>
+						<th class="tabla_texto"> Dias </th>
+						<th class="tabla_texto"> Periodo </th>';
+	
+
+					
+	if(($tutorship_list || $historial_tutorias) && $estudiante)
+	$tabla.='			<th class="tabla_texto"> Grupo </th>
+						<th class="tabla_texto"> Admin. </th>
+						<th class="tabla_texto"> Docente </th>
+						<th class="tabla_texto"> Dias </th>
+						<th class="tabla_texto"> Comienza </th>
+						<th class="tabla_texto"> Termina </th>
 						<th class="tabla_texto"> Fecha de Inicio </th>
-						<th class="tabla_texto"> Fecha de Finalización </th>
-						<th class="tabla_texto"> Hora de Inicio </th>
-						<th class="tabla_texto"> Hora de Finalización </th>';
+						<th class="tabla_texto"> Fecha Final </th>
+						<th class="tabla_texto"> Periodo </th>';
+
+	if(($tutorship_list || $historial_tutorias) && !($estudiante))
+	$tabla.='			<th class="tabla_texto"> Grupo </th>
+						<th class="tabla_texto"> '.$usuario_tipo.'</th>
+						<th class="tabla_texto"> Dias </th>
+						<th class="tabla_texto"> Comienza </th>
+						<th class="tabla_texto"> Termina </th>
+						<th class="tabla_texto"> Fecha de Inicio </th>
+						<th class="tabla_texto"> Fecha Final </th>
+						<th class="tabla_texto"> Periodo </th>';
 			
 
-	if($tutorship_list || $home)
-	$tabla.=' 			<th class="tabla_texto" colspan="2"> Opciones </th>';
+	if($tutorship_list && !($estudiante))
+	$tabla.=' 			<th class="tabla_texto" colspan="3"> Opciones </th>';
 
-	if($historial_tutorias)
+	if(($home) && ($total>=1) && !($estudiante))
+	$tabla.=' 			<th class="tabla_texto" colspan="3"> Opciones </th>';
+
+	if($historial_tutorias && !($estudiante))
 	$tabla.=' 			<th class="tabla_texto" colspan="1"> Opciones </th>';
 
 	$tabla.='
@@ -136,41 +282,53 @@
 			$fecha_inicial = date("d/m/Y", strtotime($fecha_inicial));
 			$fecha_final = $rows['fecha_final'];
 			$fecha_final = date("d/m/Y", strtotime($fecha_final));
-
-
 			$tabla.='
-				<tr class="has-text-centered">';
+				<tr class="has-text-centered">
+					<td class="tabla_texto">'.$rows['grupo'].'</td>';
 
-			if($historial_tutorias)
+
+			if($administrador || $estudiante)
 			$tabla .= '
-					<td class="tabla_texto">'.$rows['nombre'].'</td>
-					<td class="tabla_texto">'.$rows['nombre'].'</td>';
+				<td class="tabla_texto">'.$rows['nombre_docente'].' '.$rows['apellido_docente'].'</td>';
 
-			$tabla.='
-                    <td class="tabla_texto">'.$rows['grupo'].'</td>
-                    <td class="tabla_texto">'.$rows['dias'].'</td>
-                    <td class="tabla_texto">'.$rows['nombre_tipo'].'</td>
-                    <td class="tabla_texto">'.$fecha_inicial.'</td>
-                    <td class="tabla_texto">'.$fecha_final.'</td>
+			if($docente || $estudiante)
+			$tabla .= '
+				<td class="tabla_texto">'.$rows['nombre_administrador'].' '.$rows['apellido_administrador'].'</td>';
+
+			if($tutorship_list || $historial_tutorias)	
+			$tabla .= '
+					<td class="tabla_texto">'.$rows['dias'].'</td>
 					<td class="tabla_texto">'.$hora_inicial.'</td>
                     <td class="tabla_texto">'.$hora_final.'</td>
-                    <td class="tabla_texto is-fullwidth">';
-				
-			if($tutorship_list || $home)		
-			$tabla.='
-				<div>
-					<div class="contenedor_opciones pr-1">
-						<a href="index.php?vista=tutorship_update&docente_ci='. $rows['docente_ci'] .'&dias='. $rows['dias']. '&hora_inicial='. $rows['hora_inicial'] .'" class="button is-success is-rounded is-small opciones"> Actualizar </a>
-					</div>
-				</td>
-				<td class="tabla_texto is-fullwidth pr-4">
-					<div class="contenedor_opciones pr-1">
-						<a href="index.php?vista=tutorship_delete&docente_ci='. $rows['docente_ci'] .'&dias='. $rows['dias']. '&hora_inicial='. $rows['hora_inicial'] .'" class="button is-danger is-rounded is-small opciones"> Archivar </a>
-					</div>
-				</td>
-			</tr>';
+					<td class="tabla_texto">'.$fecha_inicial.'</td>
+                    <td class="tabla_texto">'.$fecha_final.'</td>
+					<td class="tabla_texto">'.$rows['nombre_tipo'].'</td>';
 
-			if($historial_tutorias)
+			if($home)
+				$tabla.='
+                    <td class="tabla_texto">'.$rows['dias'].'</td>
+                    <td class="tabla_texto">'.$rows['nombre_tipo'].'</td>';
+				
+			if(($tutorship_list || $home) && !($estudiante))		
+				$tabla.='
+					<td class="tabla_texto is-fullwidth pl-2 pr-2">
+						<div class="pr-1">
+							<a href="index.php?vista=tutorship_update&id='. $rows['id'] .'" class="button is-success is-rounded is-small opciones"> Actualizar </a>
+						</div>
+					</td>
+					<td class="tabla_texto is-fullwidth pl-2 pr-2">
+						<div class="pr-1">
+							<a href="index.php?vista=agregar_estudiante&id='. $rows['id'] .'" class="button is-black is-rounded is-small opciones"> Estudiantes </a>
+						</div>
+					</td>
+					<td class="tabla_texto is-fullwidth pl-2 pr-2">
+						<div class="pr-1">
+							<a href="index.php?vista=tutoria_archivar&id='. $rows['id'] .'" class="button is-danger is-rounded is-small opciones"> Archivar </a>
+						</div>
+					</td>
+				</tr>';
+
+			if($historial_tutorias && !($estudiante))
 			$tabla.='
 				<div>
 					<div class="contenedor_opciones pr-1">
@@ -183,8 +341,12 @@
 		$pag_final=$contador-1;
 		
 	}else{
+		if($tutorship_list)
+			$colspan = 11;
 		if($historial_tutorias)
-			$colspan = 10;
+			$colspan = 9;
+		if($home)
+			$colspan = 7;
 
 		if($total>=1){
 			$tabla.='
@@ -200,7 +362,13 @@
 			$tabla.='
 				<tr class="has-text-centered" >
 					<td colspan='.$colspan.'>
-						No hay tutorías ingresadas con este usuario
+						<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
+						<a href="index.php?vista=agregar_estudiante" class="button is-link is-rounded is-small mt-4 mb-4">
+							Haga clic aquí para agregarlo
+						</a>
+						<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
+							O aquí para ver el historial de usuarios
+						</a>
 					</td>
 				</tr>
 			';
@@ -212,7 +380,7 @@
 	$contador--;
 
 	if($total>0 && $pagina<=$Npaginas){
-		$tabla.='<p class="has-text-right">Mostrando tutorías del <strong>'.$inicio.'</strong> al <strong>'.$contador.'</strong> de un <strong>total de '.$total.'</strong></p>';
+		$tabla.='<p class="has-text-right">Mostrando tutorías del <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 	}
 
 	$conexion=null;

@@ -14,7 +14,7 @@
             <div class="columns">
                 <div class="column">
                     <div class="control">
-                        <label> Grupo <b class="asterisco">*</b> </label>
+                        <label> Grupo y Asignatura <b class="asterisco">*</b> </label>
                         <input class="input" type="text" name="grupo" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9-°* ]{3,50}" maxlength="50" required>
                     </div>
                 </div>

@@ -53,7 +53,7 @@
             </span>
             Lista de Estudiantes
         </a>
-        <a href="index.php?vista=attendance" class="panel-block">
+        <a href="index.php?vista=attendance&buscar=false" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>

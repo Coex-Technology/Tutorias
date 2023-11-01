@@ -126,21 +126,21 @@
 
 		foreach($datos as $rows){
 
-			if($rows['direccion']  === NULL){
+			if($rows['direccion']  == NULL){
 				$rows['direccion'] = "<i><u> [Direccion no ingresada] </u></i>";
 			}
 
-			if($rows['email']  === NULL){
+			if($rows['email']  == NULL){
 				$rows['email'] = "<i><u> [Email no ingresado] </u></i>";
 			}
 
-			if($rows['usuarios_tipos_id'] === 1){
+			if($rows['usuarios_tipos_id'] == 1){
 				$rows['usuarios_tipos_id'] = "Administrativo";
 
-			}elseif($rows['usuarios_tipos_id'] === 2){
+			}elseif($rows['usuarios_tipos_id'] == 2){
 				$rows['usuarios_tipos_id'] = "Docente";
 				
-			}elseif($rows['usuarios_tipos_id'] === 3){
+			}elseif($rows['usuarios_tipos_id'] == 3){
 				$rows['usuarios_tipos_id'] = "Estudiante";
 				
 			}else{
@@ -173,7 +173,7 @@
 					<td>'.$ci.'</td>
                     <td>'.$nombre.'</td>
                     <td>'.$apellido.'</td>
-                    <td>'.$telefono.'</td>
+                    <td>'."0".$telefono.'</td>
                     <td>'.$email.'</td>
                     <td>'.$direccion.'</td>
                     <td>'.$usuarios_tipos_id.'</td>';
@@ -192,7 +192,7 @@
 			if($historial_usuarios){
 				$tabla.='
 						<td>
-							<a href="index.php?vista=user_update&user_ci_up='.$rows['ci'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
+							<a href="'.$url.$pagina.'&user_ci='.$rows['ci'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
 						</td>
 					</tr>
 				';
@@ -202,10 +202,13 @@
 		$pag_final=$contador-1;
 		 
 	}else{
+		$colspan = 8;
+			
+
 		if($total>=1){
 			$tabla.='
 				<tr class="has-text-centered" >
-					<td colspan="9">
+					<td colspan="'.$colspan.'">
 						<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
 							Haga clic acá para recargar el listado
 						</a>
@@ -215,7 +218,7 @@
 		}else{
 			$tabla.='
 				<tr class="has-text-centered" >
-					<td colspan="9">
+					<td colspan="'.$colspan.'">
 						No hay registros en el sistema
 					</td>
 				</tr>
@@ -237,5 +240,7 @@
 	if($total>=0 && $pagina<=$Npaginas){
 		echo paginador_tablas($pagina,$Npaginas,$url,7);
 	}
+
+	echo "<br><br>";
 
 ?>

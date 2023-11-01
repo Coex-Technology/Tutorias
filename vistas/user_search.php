@@ -65,15 +65,15 @@
         <div class="column">
             <form class="has-text-centered " action="" method="POST" autocomplete="off" >
                 <input type="hidden" name="modulo_buscador" value="usuario"> 
-                <input type="hidden" name="eliminar_buscador" value="usuario">
+                <input type="hidden" name="archivar_buscador" value="usuario">
                 <br>
             </form>
         </div>
     </div>
     <?php
-            # Eliminar usuario #
+            # Archivar usuario #
             if(isset($_GET['user_id_del'])){
-                require_once "./php/usuario_eliminar.php";
+                require_once "./php/usuario_archivar.php";
             }
 
             if(!isset($_GET['page'])){

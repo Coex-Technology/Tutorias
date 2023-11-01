@@ -55,17 +55,38 @@
 		$tutorias_usuarios_datos = $check_tutorias_usuarios->fetchAll(PDO::FETCH_ASSOC);
 
 
-		if ($check_asistencias->rowCount() > 0 || $check_contactos->rowCount() > 0 || $check_tutorias->rowCount() > 0 || $check_tutorias_usuarios->rowCount() > 0) {
+		if (isset($user_ci_del) && $user_ci_del !== "") {
+			$archivar_usuario=conexion();
+			$archivar_usuario=$archivar_usuario->prepare("UPDATE usuarios SET activo = 'No Activo' WHERE ci = :ci;
+			");
+
+			$archivar_usuario->execute([":ci"=>$user_ci_del]);
+		}
+
+		if($archivar_usuario->rowCount()==1){
 			echo '
-			<div class="notification has-text-centered">
-				<strong>¡Revisar datos!</strong><br>
-				No se pudo eliminar el usuario, dado que tiene datos registrados.
-			</div>
+				<div class="has-text-centered notification is-info is-light">
+					<strong>¡USUARIO ARCHIVADO!</strong><br>
+					El usuario se archivo con exito <br>
+					<a href="index.php?vista=historial_usuarios"> Si desea deshacer esta acción acceda a esta página </a>
+				</div>
 			';
+		}else{
+			echo '
+				<div class="has-text-centered notification is-light">
+					<strong>¡USUARIO ARCHIVADO!</strong><br>
+					El usuario se archivo con exito <br>
+					Si desea deshacer esta acción acceda al <a href="index.php?vista=historial_usuarios"> historial </a>
+				</div>
+			';
+		}
+
+
+		if ($check_asistencias->rowCount() > 0 || $check_contactos->rowCount() > 0 || $check_tutorias->rowCount() > 0 || $check_tutorias_usuarios->rowCount() > 0) {
 
 			foreach($usuarios_datos as $rows_usuario){
 				if($rows_usuario['usuarios_tipos_id'] === 1){
-					$usuarios_tipos_id = "Administrativo";
+					$usuarios_tipos_id = "Administrador";
 
 				}elseif($rows_usuario['usuarios_tipos_id'] === 2){
 					$usuarios_tipos_id = "Docente";
@@ -109,7 +130,7 @@
 				<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr class="has-text-centered is-vcentered tabla_encabezado">
-							<th colspan="8"> <p class="tabla_titulo"> Datos del Usuario - [ '.$usuarios_tipos_id.' ] </p> </th>
+							<th colspan="6"> <p class="tabla_titulo"> Datos del Usuario - [ '.$usuarios_tipos_id.' ] </p> </th>
 						</tr>
 						<tr class="has-text-centered">
 							<th class="tabla_texto"> Cedula de Identidad </th>
@@ -118,7 +139,6 @@
 							<th class="tabla_texto"> Teléfono </th>
 							<th class="tabla_texto"> Email </th>
 							<th class="tabla_texto"> Dirección </th>
-							<th class="tabla_texto" colspan="2">Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -144,12 +164,6 @@
 							<td class="tabla_texto">'.$telefono = $rows_contactos['telefono'].'</td>
 							<td class="tabla_texto">'.$rows_contactos['email'].'</td>
 							<td class="tabla_texto">'.$rows_usuario['direccion'].'</td>
-							<td class="tabla_texto">
-								<a href="index.php?vista=user_update&user_ci_up='.$rows_usuario['ci'].'" class="button is-success is-rounded is-small">Actualizar</a>
-							</td>
-							<td class="tabla_texto">
-								<a href="'.$url.$pagina.'&user_ci_del='.$rows_usuario['ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
-							</td>
 						</tr>
 					';
 				}
@@ -171,7 +185,7 @@
 				<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr class="has-text-centered is-vcentered tabla_encabezado">
-							<th colspan="8"> <p class="tabla_titulo"> Tutorias asociadas al '.$usuarios_tipos_id.' '.$nombre_usuario.' '.$apellido_usuario.' </p> </th>
+							<th colspan="6"> <p class="tabla_titulo"> Tutorias asociadas al '.$usuarios_tipos_id.' '.$nombre_usuario.' '.$apellido_usuario.' </p> </th>
 						</tr>
 						<tr class="has-text-centered">
 							<th class="tabla_texto"> Tutoría </th>
@@ -180,7 +194,6 @@
 							<th class="tabla_texto"> Días </th>
 							<th class="tabla_texto"> Horario de Inicio </th>
 							<th class="tabla_texto"> Horario de Finalización </th>
-							<th class="tabla_texto" colspan="2">Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -215,12 +228,6 @@
 							<td class="tabla_texto">'.$rows_tutorias_docente['dias'].'</td>
 							<td class="tabla_texto">'.$hora_inicial.'</td>
 							<td class="tabla_texto">'.$hora_final.'</td>
-							<td class="tabla_texto">
-								<a href="index.php?vista=user_update&user_ci_up='.$rows_usuario['ci'].'" class="button is-success is-rounded is-small">Actualizar</a>
-							</td>
-							<td class="tabla_texto">
-								<a href="'.$url.$pagina.'&user_ci_del='.$rows_usuario['ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
-							</td>
 						</tr>
 					';
 					$contador++;
@@ -232,7 +239,7 @@
 				if($total1>=1){
 					$tabla2.='
 						<tr class="has-text-centered" >
-							<td colspan="9">
+							<td colspan="7">
 								<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
 									Haga clic acá para recargar el listado
 								</a>
@@ -242,7 +249,7 @@
 				}else{
 					$tabla2.='
 						<tr class="has-text-centered" >
-							<td colspan="9">
+							<td colspan="7">
 								No hay registros en el sistema
 							</td>
 						</tr>
@@ -256,7 +263,7 @@
 			echo "<br>";
 		}
 
-		if ($check_asistencias->rowCount() > 0 || $check_tutorias->rowCount() > 0 || $check_tutorias_usuarios->rowCount() > 0) {
+		if($check_asistencias->rowCount() > 0) {
 
 
 			// ------------------------------- # Crear Tabla 3 (Datos de Asistencia) # -------------------------------
@@ -265,7 +272,7 @@
 				<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr class="has-text-centered is-vcentered tabla_encabezado">
-							<th colspan="8"> <p class="tabla_titulo"> Asistencia </p> </th>
+							<th colspan="6"> <p class="tabla_titulo"> Asistencia </p> </th>
 						</tr>
 						<tr class="has-text-centered">
 							<th class="tabla_texto"> <p class="tabla_titulo"> Tutoría </p> </th>
@@ -274,7 +281,6 @@
 							<th class="tabla_texto"> <p class="tabla_titulo"> Asistencias </p> </th>
 							<th class="tabla_texto"> Inasistencias Justificadas</th>
 							<th class="tabla_texto"> Inasistencias Injustificadas</th>
-							<th class="tabla_texto" colspan="2"> <p class="tabla_titulo"> Opciones </p> </th>
 						</tr>
 					</thead>
 					<tbody>
@@ -310,12 +316,6 @@
 								<td class="tabla_texto">'.$rows_asistencias['asistencias'].'</td>
 								<td class="tabla_texto">'.$rows_asistencias['inasistencias_justificadas'].'</td>
 								<td class="tabla_texto">'.$rows_asistencias['inasistencias_injustificadas'].'</td>
-								<td class="tabla_texto">
-									<a href="index.php?vista=user_update&user_ci_up='.$rows_asistencias['ci'].'" class="button is-success is-rounded is-small">Actualizar</a>
-								</td>
-								<td class="tabla_texto">
-									<a href="'.$url.$pagina.'&user_ci_del='.$rows_asistencias['ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
-								</td>
 							</tr>
 						';
 						$contador++;
@@ -327,7 +327,7 @@
 				if($total1>=1){
 					$tabla3.='
 						<tr class="has-text-centered" >
-							<td colspan="9">
+							<td colspan="7">
 								<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
 									Haga clic acá para recargar el listado
 								</a>
@@ -337,7 +337,7 @@
 				}else{
 					$tabla3.='
 						<tr class="has-text-centered" >
-							<td colspan="9">
+							<td colspan="7">
 								No hay registros en el sistema
 							</td>
 						</tr>
@@ -358,38 +358,35 @@
 			// 	echo paginador_tablas($pagina,$Npaginas,$url,7);
 			// }
 			
-		}else{	
-		
-			$eliminar_usuario=conexion();
-			$eliminar_usuario=$eliminar_usuario->prepare("UPDATE usuarios SET activo = 'No Activo' WHERE ci = :ci;
-			");
-	
-			$eliminar_usuario->execute([":ci"=>$user_ci_del]);
-	
-			if($eliminar_usuario->rowCount()==1){
-				echo '
-					<div class="notification is-info is-light">
-						<strong>¡USUARIO ELIMINADO!</strong><br>
-						El usuario se archivo con exito <br>
-						<a href="index.php?vista=historial_usuarios"> Si desea deshacer esta acción acceda a esta página </a>
-					</div>
+		}else{
+			if($total>=1){
+				$tabla2.='
+					<tr class="has-text-centered" >
+						<td colspan="7">
+							<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
+								Haga clic acá para recargar el listado
+							</a>
+						</td>
+					</tr>
 				';
 			}else{
-				echo '
-					<div class="notification is-danger is-light">
-						<strong>¡Ocurrio un error inesperado!</strong><br>
-						No se pudo archivar al usuario, por favor intente nuevamente
-					</div>
+				$tabla2.='
+					<tr class="has-text-centered" >
+						<td colspan="7">
+							No hay registros en el sistema
+						</td>
+					</tr>
 				';
 			}
 		}
+		
 
 		$check_asistencias = null;
 		$check_contactos = null;
 		$check_tutorias = null;
 		$check_tutorias_docente = null;
 		$check_tutorias_usuarios = null;
-		$eliminar_usuario=null;
+		
 	
 	}else{
 		echo '
@@ -401,6 +398,7 @@
 
 	}	
 
+	$archivar_usuario=null;
     $check_usuario=null;
 	$usuarios_datos = null;
 	$tutorias_datos = null;

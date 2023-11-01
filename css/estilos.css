@@ -63,8 +63,7 @@ td {
 .mensaje_alerta{
     width: 50vh !important;
     height: auto !important;
-    position: absolute !important;
-    right: 50% !important;
+    right: 100% !important;
     left: 30% !important;
 }
 
@@ -81,7 +80,7 @@ td {
     z-index: 99;
     justify-content: flex-end;
     position: absolute;
-    left: 42%;
+    left: 40%;
     top: 50%;
     transform: translate(-50%);
     width: 200px;
@@ -92,11 +91,11 @@ td {
     width: 30vh !important;
     margin-top: 100hv !important;
     height: auto !important;
-    position: fixed !important;
-    right: 10vh !important;
+    position: absolute !important;
+    right: 1vh !important;
 }
 
-/* usuario_eliminar */
+/* usuario_archivar */
 
 .tabla_encabezado {
     background-color: rgba(199, 194, 194, 0.5);
@@ -145,3 +144,17 @@ td {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+/* Ver Archivo */
+
+.archivo_estilo {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 100%;
+}
+  
+.archivo_estilo h2 {
+    margin: 0;
+}
+  

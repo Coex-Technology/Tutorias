@@ -33,13 +33,14 @@
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
             Historial de Tutorias
-        </a>        
+        </a>      
         <a href="index.php?vista=tutorship_list" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
             Mostrar lista completa de tutorías
         </a>
+        
 
     </div>
     
@@ -75,11 +76,11 @@
             Enviar Mensaje al Docente
         </a>
 
-        <a href="index.php?vista=attendance" class="panel-block">
+        <a href="index.php?vista=consult_attendance" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
-            Asistencia del docente
+            Consultar asistencias
         </a>
 
     </div>

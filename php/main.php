@@ -2,9 +2,18 @@
 	
 	# Conexion a la base de datos #
 	function conexion(){
-		$pdo = new PDO('mysql:host=localhost;dbname=tutorias', 'root', '');
-		return $pdo;
+		try {
+			$pdo = new PDO('mysql:host=localhost;dbname=tutorias', 'root', '', array(
+				PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_spanish2_ci",
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			));
+			return $pdo;
+		} catch (PDOException $e) {
+			echo 'Error al conectarse a la base de datos: ' . $e->getMessage();
+			die();
+		}
 	}
+	
 
 	
 	# Verificar datos #
@@ -58,8 +67,9 @@
 		$nombre=str_ireplace("$", "_", $nombre);
 		$nombre=str_ireplace(".", "_", $nombre);
 		$nombre=str_ireplace(",", "_", $nombre);
-		$nombre=$nombre."_".rand(0,100);
 		return $nombre;
+		
+		#$nombre=$nombre."_".rand(0,100);#
 	}
 
 	# Funcion paginador de tablas #

@@ -59,7 +59,7 @@
 
     }
 
-    /*Paginador tutoria*/
+    # Paginador tutoria #
     require_once "./php/tutoria_lista.php";
 
     echo '</div>';

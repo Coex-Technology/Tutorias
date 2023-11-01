@@ -7,7 +7,7 @@ function mostrarInformacion(selectElement) {
     if (tipoSeleccionado == "Imágenes") {
         tipoSeleccionadoElement.textContent = "Imágenes";
         tipoArchivoElement.textContent = "JPG, GIF, PNG (MAX 10MB)";
-        inputElement.accept = ".jpg, .gif, .png, .jpeg";
+        inputElement.accept = ".jpg, .gif, .png";
 
     } else if (tipoSeleccionado == "Textos") {
         tipoSeleccionadoElement.textContent = "Textos";

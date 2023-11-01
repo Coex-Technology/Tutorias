@@ -33,26 +33,27 @@
     $nombre_dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     $posicion_del_dia = date("w", strtotime($dias));
     $dias = $nombre_dias[$posicion_del_dia];
-
+    
+    
     /*Verificando tutoria existente */
     $conexion = conexion();
     $verificar_tutoria_existente = $conexion->query("SELECT id FROM tutorias WHERE id = $id");
     
 
-    if ($verificar_tutoria_existente->rowCount() > 0) {
+    if(!($verificar_tutoria_existente->rowCount() == 0)){
         echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrió un error inesperado!</strong><br>
-                Ya existe una tutoría con los mismos datos.
-                <a href="index.php?vista=tutorship_list"> <br> Click aquí para ver la lista de tutorias existentes </a>
+            <div class="notification is-info is-light pl-4 pr-4">
+                <strong>¡TUTORÍA CREADA!</strong> <br>
+                La tutoría se creó con éxito, si lo desea puede<br>
+                <a href="index.php?vista=agregar_estudiante&tutoria_id='.$id.'"> - Agregarle estudiantes </a> <br>
+                <a href="index.php?vista=tutorship_list"> - O listar las tutorías </a>
             </div>
         ';
-        exit();
-
-    } else {
-
+        
+    }else{
+        
         /*Verificando campos obligatorios*/
-        if($grupo=="" || $fecha_inicial == "" || $fecha_final == "" || $hora_inicial == "" || $hora_final == "" || $dias=="" || $docente_ci=="" || $administrador_ci=="" || $tutorias_tipos_id==""){
+        if($id == "" || $docente_ci == "" || $administrador_ci=="" || $grupo == "" || $dias=="" || $fecha_inicial == "" || $fecha_final == "" || $hora_inicial == "" || $hora_final == "" || $activa=="" || $tutorias_tipos_id==""){
             echo '
                 <div class="notification is-danger is-light">
                     <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -67,7 +68,7 @@
             echo '
                 <div class="notification is-danger is-light">
                     <strong>¡Ocurrio un error inesperado!</strong><br>
-                    El nombre del GRUPO no coincide con el formato solicitado
+                    El nombre del GRUPO no coincide con el formato esperado
                 </div>
             ';
             exit();
@@ -77,7 +78,7 @@
             echo '
                 <div class="notification is-danger is-light">
                     <strong>¡Ocurrio un error inesperado!</strong><br>
-                    Los DIAS no coinciden con el formato solicitado
+                    Los DIAS no coinciden con el formato esperado
                 </div>
             ';
             exit();
@@ -88,44 +89,62 @@
                 echo '
                     <div class="notification is-danger is-light">
                         <strong>¡Ocurrio un error inesperado!</strong><br>
-                        La DESCRIPCIÓN no coincide con el formato solicitado
+                        La DESCRIPCIÓN no coincide con el formato esperado
                     </div>
                 ';
                 exit();
             }
         }
 
-        if($fecha_inicial != ""){
-            if(verificar_datos("^\d{4}-\d{2}-\d{2}$",$fecha_inicial)){
-                echo '
+        if(verificar_datos("^\d{4}-\d{2}-\d{2}$",$fecha_inicial)){
+            echo '
+                <div class="notification is-danger is-light">
+                    <strong>¡Ocurrio un error inesperado!</strong><br>
+                    La FECHA DE INICIO no coincide con el formato esperado
+                </div>
+            ';
+            exit();
+        }
+
+        if(verificar_datos("^\d{2}:\d{2}$",$hora_inicial)){
+            echo '
+                <div class="notification is-danger is-light">
+                    <strong>¡Ocurrio un error inesperado!</strong><br>
+                    El HORARIO DE INCIO no coincide con el formato esperado
+                </div>
+            ';
+            exit();
+        }
+
+        if (!($hora_inicial < $hora_final)) {
+            echo '
                     <div class="notification is-danger is-light">
-                        <strong>¡Ocurrio un error inesperado!</strong><br>
-                        La FECHA DE INICIO no coincide con el formato solicitado
+                        <strong>¡Verifique los datos!</strong><br>
+                        La HORA DE INCIO es mayor o igual a la HORA FINAL
                     </div>
                 ';
                 exit();
-            }
         }
 
-        if($hora_inicial != ""){
-            if(verificar_datos("^\d{2}:\d{2}$",$hora_inicial)){
-                echo '
+        $fecha_inicial_formato = date("Y-m-d", strtotime(str_replace("/", "-", $fecha_inicial)));
+        $fecha_final_formato = date("Y-m-d", strtotime(str_replace("/", "-", $fecha_final)));
+
+        if ($fecha_inicial_formato > $fecha_final_formato) {
+            echo '
                     <div class="notification is-danger is-light">
-                        <strong>¡Ocurrio un error inesperado!</strong><br>
-                        El HORARIO DE INCIO no coincide con el formato solicitado
+                        <strong>¡Verifique los datos!</strong><br>
+                        La FECHA DE INCIO es mayor o igual a la FECHA FINAL
                     </div>
                 ';
                 exit();
-            }
         }
-
 
         if($fecha_final != ""){
             if(verificar_datos("^\d{4}-\d{2}-\d{2}$",$fecha_final)){
                 echo '
                     <div class="notification is-danger is-light">
                         <strong>¡Ocurrio un error inesperado!</strong><br>
-                        La FECHA DE FINALIZACIÓN no coincide con el formato solicitado
+                        La FECHA DE FINALIZACIÓN no coincide con el formato esperado
                     </div>
                 ';
                 exit();
@@ -137,17 +156,61 @@
                 echo '
                     <div class="notification is-danger is-light">
                         <strong>¡Ocurrio un error inesperado!</strong><br>
-                        El HORARIO DE FINALIZACIÓN no coincide con el formato solicitado
+                        El HORARIO DE FINALIZACIÓN no coincide con el formato esperado
                     </div>
                 ';
                 exit();
             }
         }
+
+        if($hora_final != ""){
+            if(verificar_datos("^\d{2}:\d{2}$",$hora_final)){
+                echo '
+                    <div class="notification is-danger is-light">
+                        <strong>¡Ocurrio un error inesperado!</strong><br>
+                        El HORARIO DE FINALIZACIÓN no coincide con el formato esperado
+                    </div>
+                ';
+                exit();
+            }
+        }
+
+        if($descripcion == "")
+            $descripcion = "[No se ha ingresado]";
+
+        $posicion_del_dia = "";
+        $posicion_del_dia = date("w", strtotime($fecha_inicial));
+        $dia_fecha_inicial = $nombre_dias[$posicion_del_dia];
+
+        $posicion_del_dia = date("w", strtotime($fecha_final));
+        $dia_fecha_final = $nombre_dias[$posicion_del_dia];
+
+        if($dia_fecha_inicial != $dias){
+            echo '
+                <div class="notification is-danger is-light">
+                    <strong>¡Ocurrio un error inesperado!</strong><br>
+                    El DÍA DE INICIO de la tutoría no es un '.$dias.' tal como se espera debido a lo que se especifico en el campo del primer día de tutoría.
+                </div>
+            ';
+            exit();
+        }
+
+        if($dia_fecha_final != $dias){
+            echo '
+                <div class="notification is-danger is-light">
+                    <strong>¡Ocurrio un error inesperado!</strong><br>
+                    El DÍA DE FINALIZACIÓN de la tutoría no es un '.$dias.' tal como se espera debido a lo que se especifico en el campo del primer día de tutoría.
+                </div>
+            ';
+            exit();
+        }
+
         $check_tutoria=null;
 
 
         $guardar_tutoria=conexion();
-        $guardar_tutoria=$guardar_tutoria->prepare ("INSERT INTO tutorias (id,docente_ci,administrador_ci,grupo,descripcion,dias,fecha_inicial,fecha_final,hora_inicial,hora_final,activa,tutorias_tipos_id) VALUES(:id,:docente_ci,:administrador_ci,:grupo,:descripcion,:dias,:fecha_inicial,:fecha_final,:hora_inicial,:hora_final,:activa,:tutorias_tipos_id)");
+        $guardar_tutoria=$guardar_tutoria->prepare ("INSERT INTO tutorias (id,docente_ci,administrador_ci,grupo,descripcion,dias,fecha_inicial,fecha_final,hora_inicial,hora_final,activa,tutorias_tipos_id)
+        VALUES(:id,:docente_ci,:administrador_ci,:grupo,:descripcion,:dias,:fecha_inicial,:fecha_final,:hora_inicial,:hora_final,:activa,:tutorias_tipos_id)");
 
         $marcadores=[
             ":id"=>$id,
@@ -164,27 +227,21 @@
             ":tutorias_tipos_id"=>$tutorias_tipos_id,
         ];
 
-        $guardar_tutoria->execute($marcadores);
-
-
-        if ($guardar_tutoria->rowCount() == 1) {
-            echo '
-                <div class="notification is-info is-light">
-                    <strong>¡TUTORÍA CREADA!</strong><br>
-                    La tutoría se creó con éxito<br>
-                    <a href="index.php?vista=tutorship_users&docente_ci=' . $docente_ci . '&dias=' . $dias . '&hora_inicial=' . $hora_inicial . '"> Click aquí para agregar estudiantes </a>
-                </div>
-            ';
+        $verificar_2 = $conexion->query("SELECT id FROM tutorias WHERE id = $id");    
         
-        }else{
-            echo '
-                <div class="notification is-danger is-light">
-                    <strong>¡Ocurrio un error inesperado!</strong><br>
-                    No se pudo registrar la tutoría, por favor intente nuevamente
-                </div>
-            ';
+        if($verificar_2->rowCount() == 0){
+            $guardar_tutoria->execute($marcadores);
         }
 
+        echo '
+            <div class="notification is-info is-light pl-4 pr-4">
+                <strong>¡TUTORÍA CREADA!</strong> <br>
+                La tutoría se creó con éxito, si lo desea puede<br>
+                <a href="index.php?vista=agregar_estudiante&tutoria_id='.$id.'"> - Agregarle estudiantes </a> <br>
+                <a href="index.php?vista=tutorship_list"> - O listar las tutorías </a>
+            </div>
+        ';
+    
     }
 
     $guardar_tutoria=null;

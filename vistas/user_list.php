@@ -26,7 +26,7 @@
 
     require_once "./php/main.php";
 
-    # Eliminar usuario #
+    # Archivar usuario #
     if(isset($_GET['user_ci_del'])){
         require_once "./php/usuario_archivar.php";
     }

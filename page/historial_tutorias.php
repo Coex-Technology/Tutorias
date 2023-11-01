@@ -15,6 +15,11 @@
         <div class="container mt-5">  
     ';
 
+    $estudiante = $_SESSION['usuarios_tipos_id'] == 3;
+
+    if($estudiante)
+        echo "<script> window.location.href='index.php?vista=home'; </script>";
+
 
     echo '<div class="container mt-5">' ;
     

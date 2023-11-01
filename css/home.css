@@ -101,13 +101,6 @@ body{
     text-overflow: ellipsis;
 }
 
-.contenedor_opciones{
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: auto;
-}
-
 .opciones{
     width: auto;
     white-space: nowrap;

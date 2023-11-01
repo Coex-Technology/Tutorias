@@ -19,8 +19,6 @@
         	$datos=$check_usuario->fetch();
 	?>
 
-		<div class="form-rest mb-6 mt-6"></div>
-
 		<form action="./php/usuario_actualizar.php" method="POST" class="FormularioAjax" autocomplete="off">
 
 			<input type="hidden" name="ci" value="<?php echo $datos['ci']?>" required >
@@ -30,13 +28,13 @@
 					<div class="columns">
 						<div class="column">
 							<div class="control">
-								<label> Nombre </label>
+								<label> Nombre <b class="asterisco">*</b> </label>
 								<input class="input" type="text" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required value="<?php echo $datos['nombre']?>">
 							</div>
 						</div>
 						<div class="column">
 							<div class="control">
-								<label> Apellido </label>
+								<label> Apellido <b class="asterisco">*</b> </label>
 								<input class="input" type="text" name="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required value="<?php echo $datos['apellido']?>">
 							</div>
 						</div>
@@ -51,9 +49,28 @@
 						</div>
 						<div class="column">
 							<div class="control">
-								<label> E-mail </label>
+								<label> E-mail <b class="asterisco">*</b> </label>
 								<input class="input" type="email" name="email" maxlength="70" value="<?php echo $datos['email']?>">
 							</div>
+						</div>
+					</div>
+
+					<div class="columns">
+						<div class="column">
+							<div class="control">
+								<label> Número <b class="asterisco">*</b> </label>
+								<input class="input" type="text" name="telefono" pattern="[0-9]{8,9}" maxlength="9" value="<?php echo "0".$datos['telefono']?>" required >
+							</div>
+						</div>
+						<div class="column">
+							<label> <p class="has-text-centered"> Tipo de Usuario <b class="asterisco">*</b> </p> </label>
+
+							<div class="select is-rounded is-fullwidth">
+								<select name="usuarios_tipos_id">
+									<option value="1" class="has-text-centered"> Administrador </option>
+									<option value="2" class="has-text-centered"> Docente </option>
+									<option value="3" class="has-text-centered"> Estudiante </option>
+								</select>
 						</div>
 					</div>
 				</section>
@@ -87,13 +104,13 @@
 					<div class="columns">
 						<div class="column">
 							<div class="control">
-								<label> Usuario </label>
+								<label> Usuario <b class="asterisco">*</b> </label>
 								<input class="input" type="text" name="administrador_usuario" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" required >
 							</div>
 						</div>
 						<div class="column">
 							<div class="control">
-								<label> Contraseña </label>
+								<label> Contraseña <b class="asterisco">*</b> </label>
 								<input class="input" type="password" name="administrador_clave" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required >
 							</div>
 						</div>
@@ -101,9 +118,9 @@
 					<p class="has-text-centered">
 						<button type="submit" class="button is-success is-rounded">Actualizar</button>
 					</p>
-				</section>
+				</section>				
 			</section>
-
+			<div class="form-rest mb-6 mt-6"></div>
 		</form>
 
 		<?php 
@@ -112,6 +129,7 @@
 		}
 		$check_usuario=null;
 		?>
+
 	</div>
 
 </body>

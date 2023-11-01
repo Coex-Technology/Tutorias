@@ -76,7 +76,7 @@
                 <strong>¡Ocurrio un error inesperado!</strong><br>
                 El NÚMERO DE CONTACTO no coincide con el formato solicitado
             </div>
-        '.$telefono;
+        ';
         exit();
     }
 
@@ -187,24 +187,7 @@
             $guardar_usuario->execute($marcadores_usuario);
 
 
-            if(($guardar_usuario->rowCount()==1)){
-                echo '
-                    <div class="notification is-info is-light">
-                        <strong>¡USUARIO REGISTRADO!</strong><br>
-                        El usuario se registro con exito
-                    </div>
-                ';
-            }else{
-                echo '
-                    <div class="notification is-danger is-light">
-                        <strong>¡Ocurrio un error inesperado!</strong><br>
-                        No se pudo registrar el usuario, por favor intente nuevamente
-                    </div>
-                ';
-            }
-
             # Verificar que no existan los datos #
-
             $check_contacto=conexion();
             $check_contacto=$check_contacto->prepare("SELECT * FROM contactos WHERE ci = $ci AND telefono = $telefono;");
             $check_contacto->execute();
@@ -233,9 +216,11 @@
         ":telefono"=>$telefono,
         ":email"=>$email,
     ];
+
+    $guardar_contacto->execute($marcadores_contacto);
     
 
-    if(($guardar_contacto->rowCount()==1)){
+    if(($guardar_usuario->rowCount()==1) && ($guardar_contacto->rowCount()==1)){
         echo '
             <div class="notification is-info is-light">
                 <strong>¡USUARIO REGISTRADO!</strong><br>
@@ -251,7 +236,6 @@
         ';
     }
 
-    $guardar_contacto->execute($marcadores_contacto);
 
     $guardar_contacto=null;
     $guardar_usuario=null;

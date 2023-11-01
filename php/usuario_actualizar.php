@@ -16,8 +16,13 @@
     /* Almacenando datos */
     $nombre = limpiar_cadena($_POST['nombre']);
     $apellido = limpiar_cadena($_POST['apellido']);
+
     $direccion = limpiar_cadena($_POST['direccion']);
     $email = limpiar_cadena($_POST['email']);
+
+    $telefono = limpiar_cadena($_POST['telefono']);
+    $usuarios_tipos_id = limpiar_cadena($_POST['usuarios_tipos_id']);
+
     $usuario_clave_1 = limpiar_cadena($_POST['usuario_clave_1']);
     $usuario_clave_2 = limpiar_cadena($_POST['usuario_clave_2']);
     $ci = limpiar_cadena($_POST['ci']);
@@ -139,18 +144,7 @@
 
     /* Verificando email */
     if ($email != "") {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $check_email = conexion()->query("SELECT ci, email FROM contactos WHERE ci='$ci' AND email='$email'");
-            if ($check_email->rowCount() > 0) {
-                echo '
-                    <div class="notification is-danger is-light">
-                        <strong>¡Ocurrió un error inesperado!</strong><br>
-                        El correo electrónico ingresado ya se encuentra registrado, por favor elija otro
-                    </div>
-                ';
-                exit();
-            }
-        } else {
+        if (!(filter_var($email, FILTER_VALIDATE_EMAIL))){
             echo '
                 <div class="notification is-danger is-light">
                     <strong>¡Ocurrió un error inesperado!</strong><br>
@@ -191,26 +185,30 @@
     }
 
     /* Actualizar datos */
-    $actualizar_usuario = conexion()->prepare("UPDATE usuarios SET nombre=:nombre,apellido=:apellido,direccion=:direccion WHERE ci=:ci");
+    $actualizar_usuario = conexion()->prepare("UPDATE usuarios SET ci=:ci,nombre=:nombre,apellido=:apellido,direccion=:direccion,usuarios_tipos_id=:usuarios_tipos_id WHERE ci=:ci");
 
     $marcadores = [
+        ":ci" => $ci,
         ":nombre" => $nombre,
         ":apellido" => $apellido,
         ":direccion" => $direccion,
+        ":usuarios_tipos_id" => $usuarios_tipos_id,
     ];
 
     $actualizar_usuario->execute($marcadores);
 
 
-    $actualizar_usuario2 = conexion()->prepare("UPDATE contactos SET email='$email' WHERE ci='$ci'");
+    $actualizar_usuario2 = conexion()->prepare("UPDATE contactos SET ci=:ci,telefono=:telefono,email=:email WHERE ci=:ci AND telefono=:telefono");
 
     $marcadores2 = [
+        ":ci" => $ci,
+        ":telefono" => $telefono,
         ":email" => $email,
     ];
 
     $actualizar_usuario2->execute($marcadores2);
 
-    if ($actualizar_usuario->rowCount() > 0 && $actualizar_usuario2->rowCount() > 0) {
+    if ($actualizar_usuario->rowCount() > 0 || $actualizar_usuario2->rowCount() > 0) {
         echo '
             <div class="notification is-info is-light">
                 <strong>¡USUARIO ACTUALIZADO!</strong><br>
@@ -219,9 +217,9 @@
         ';
     } else {
         echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrió un error inesperado!</strong><br>
-                No se pudieron actualizar todos los datos del USUARIO
+            <div class="notification is-white is-light">
+                <strong>¡VERIFICA LOS DATOS!</strong><br>
+                No se ha seleccionado ningun dato para modificar
             </div>
         ';
     }

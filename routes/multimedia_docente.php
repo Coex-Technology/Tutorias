@@ -14,26 +14,26 @@
                             <div class="column">
                                 <div class="control">
                                     <label> Tema (Nombre del Archivo) <b class="asterisco">*</b> </label>
-                                    <input class="input" type="text" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9-° ]{1,50}" required>
+                                    <input class="input" type="text" name="tema" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9-° ]{1,50}" required>
                                 </div>
                             </div>                            
                             <div class="column is-centered">
                                 <label> <p class="has-text-centered"> Tutoría <b class="asterisco">*</b> </p> </label>
 
                                 <div class="select is-rounded is-fullwidth">
-                                    <select name="tutorias_datos" class="container">
+                                    <select name="tutorias_id" class="container">
                                         <option value="" selected="" class="has-text-centered"> Seleccionar Tutoría </option>
                                         <?php
                                             require_once "./php/main.php";
                                             
                                             if($_SESSION['usuarios_tipos_id'] == 2){
                                                 $consulta_docente=conexion();
-                                                $consulta_docente=$consulta_docente->query("SELECT tutorias.id AS id, tutorias.docente_ci AS docente_ci, tutorias.grupo AS grupo, tutorias.dias AS dias FROM tutorias INNER JOIN usuarios ON tutorias.docente_ci = usuarios.ci WHERE tutorias.docente_ci = '".$_SESSION['ci']."'");
+                                                $consulta_docente=$consulta_docente->query("SELECT id, grupo, dias FROM tutorias WHERE docente_ci = '".$_SESSION['ci']."'");
 
                                                 if($consulta_docente->rowCount()>0){
                                                     $consulta_docente=$consulta_docente->fetchAll();
                                                     foreach($consulta_docente as $row){
-                                                        echo '<option class="has-text-centered" value="'.$row['id'].'|'.$row['docente_ci'].'"> Grupo: '.$row['grupo'].' --> Dias: '.$row['dias'].'</option>';
+                                                        echo '<option class="has-text-centered" value="'.$row['id'].'"> Grupo: '.$row['grupo'].' --> Dias: '.$row['dias'].'</option>';
                                                     }
                                                 }
                                             $consulta_docente=null;
@@ -55,16 +55,16 @@
                             </div>
                             <div class="column">
                                 <div class="control">
-                                    <label> Hora de Visualización </label>
-                                    <input class="input" type="time" name="hora_visualizacion" pattern="\d{2}:\d{2}" required>
+                                    <label> Fecha de Eliminación <b class="asterisco">*</b></label>
+                                    <input class="input" type="date" name="fecha_eliminacion" pattern="\d{4}-\d{2}-\d{2}" required>
                                 </div>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column">
                                 <div class="control">
-                                    <label> Fecha de Eliminación <b class="asterisco">*</b></label>
-                                    <input class="input" type="date" name="fecha_eliminacion" pattern="\d{4}-\d{2}-\d{2}" required>
+                                    <label> Hora de Visualización </label>
+                                    <input class="input" type="time" name="hora_visualizacion" pattern="\d{2}:\d{2}" required>
                                 </div>
                             </div>
                             <div class="column">
@@ -75,12 +75,14 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="usuarios_ci" value="<?php echo $_SESSION['ci']; ?>">
+
                         <div class="columns">
                             <div class="column">
                                 <label> Subir Multimedia </label><br>
                                 <div class="file is-small has-name">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" name="formulario_archivo" accept="">
+                                        <input class="file-input" type="file" name="formulario_archivo" accept=".jpg, .gif, .png">
                                         <span class="file-cta">
                                             <span class="file-label" id="tipoSeleccionado"> Imágenes </span>
                                         </span>

@@ -57,21 +57,12 @@
                         }
 
                         if($usuario != ""){
-                            if($usuario == 1){
-                                echo "<a href='index.php?vista=user_new' class='navbar-item menu'> Nuevo </a>";
-
-                            }elseif($usuario == 2){
-                                echo "<a href='index.php?vista=user_new' class='navbar-item menu'> Nuevo </a>";
-                            }
+                          if($usuario == 1 || $usuario == 2)
+                            echo '<a href="index.php?vista=user_new" class="navbar-item menu"> Nuevo </a>';
                         }
                   ?>
 
-                  <a href="index.php?vista=user_list" class="navbar-item is-hoverable menu"> Lista </a>
-
-                    <!-- <div class="navbar-dropdown">
-                      <a href="/coex/tutorias/vistas/user_new.php" class="navbar-item menu"> Segunda lista desplegable de los usuarios </a>
-                    </div> -->
-                    
+                  <a href="index.php?vista=user_list" class="navbar-item is-hoverable menu"> Lista </a>                    
                   <a href="index.php?vista=user_search&buscar=false" class="navbar-item menu">Buscar</a>
               </div>
           </div>
@@ -80,9 +71,14 @@
               <a class="navbar-link"> Materiales </a>
 
               <div class="navbar-dropdown">
-                  <a href="index.php?vista=multimedia" class="navbar-item menu"> Multimedia </a>
+                  <?php
+                    if($usuario != ""){
+                      if($usuario == 1 || $usuario == 2)
+                        echo '<a href="index.php?vista=multimedia" class="navbar-item menu"> Agregar Multimedia </a>';
+                    }
+                  ?>
+                  <a href="index.php?vista=multimedia_subida" class="navbar-item menu"> Multimedia Subida </a>
                   <a href="index.php?vista=horarios_tutorias" class="navbar-item menu"> Horarios de Tutoría </a>
-                  <a href="index.php?vista=fecha_examen" class="navbar-item menu"> Fecha del Examen </a>
               </div>
           </div>
 
@@ -124,7 +120,6 @@
 
             <div class="navbar-dropdown is-right">
               <a href="index.php?vista=mi_cuenta" class="navbar-item menu"> Perfil <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?> </a>
-              <a href="index.php?vista=mi_cuenta_configuracion" class="navbar-item menu"> Configuración </a>
 
               <hr class="navbar-divider">
               <a href="index.php?vista=logout" class="navbar-item menu"> Cerrar Sesión </a>

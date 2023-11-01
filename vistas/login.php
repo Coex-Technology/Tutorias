@@ -2,7 +2,7 @@
 
 	<form class="box login estilos_formulario_login" action="" method="POST" autocomplete="off">
 		<div class="mt-3 mb-6">
-			<h5 class="title is-5 has-text-centered"> SISTEMA DE TUTORÍAS </h5>
+			<h5 class="title is-5 has-text-centered"> TUTORÍAS UTU FLORIDA </h5>
 		</div>
 
 		<div class="field mb-5 ml-2 mr-2">
