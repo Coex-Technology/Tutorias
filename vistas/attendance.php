@@ -27,7 +27,7 @@
                 <h2 class="subtitle"> Pasar Lista </h2>
             </div>
 
-            <div class="container pt-3"> 
+            <div class="container pt-3 b barra_asistencia"> 
         ';
 
         $usuario_ci = $_SESSION['ci'];
@@ -196,18 +196,6 @@
 
         #---------------------------------------- Pasar Asistencia (Tabla) ----------------------------------------#
 
-        echo '
-            <div class="container is-fluid mt-5 mb-4">
-                <h1 class="title"> Asistencia </h1>
-                <h2 class="subtitle"> Pasar Lista </h2>
-            </div>
-
-            <div class="container pt-3"> 
-        ';
-
-
-        echo '<div class="container pt-3">';
-
 
         if(!isset($_GET['page'])){
             $pagina=1;
@@ -219,12 +207,10 @@
         }
 
         $pagina=limpiar_cadena($pagina);
-        $url="index.php?vista=user_list&page=";
+        $url="index.php?vista=attendance";
         $registros=7;
         $busqueda="";
-        $total=1;
-        $pagina=1;
-        $Npaginas=1;
+        $pagina = 1;
 
         $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
         $ci = $_SESSION['ci'];
@@ -233,37 +219,82 @@
 
         # Verificando asistencias #
         $check_asistencias=conexion();
-        $check_asistencias=$check_asistencias->query("SELECT * FROM asistencias WHERE usuarios_ci='$ci'");
-
-        # Verificando tutorias (docente) #
-        $check_tutorias_docente=conexion();
-        $check_tutorias_docente=$check_tutorias_docente->query("SELECT usuarios.*, tutorias.* FROM usuarios, tutorias WHERE tutorias.docente_ci = usuarios.ci AND docente_ci = '$ci'");
-        $tutorias_docente_datos=$check_tutorias_docente->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-        $consulta_datos = "SELECT * FROM usuarios WHERE ci != '".$_SESSION['ci']."' AND activo = 'Activo' ORDER BY ci ASC LIMIT $inicio, $registros";
-
-        $datos = $conexion->query($consulta_datos);
-        $datos = $datos->fetchAll();
+        $check_asistencias=$check_asistencias->query("SELECT * FROM asistencias WHERE estudiantes_ci='$ci'");
 
 
         if((isset($_GET['id']) && !empty($_GET['id'])) && ($_GET['id']) != "") {
             $tutorias_id = $_GET['id'];
 
-            $consulta_datos2 = "SELECT * FROM tutorias WHERE id != '".$tutorias_id."' ORDER BY grupo ASC LIMIT $inicio, $registros";
+            $consulta_datos = "SELECT 
+            usuarios.ci AS ci,
+            usuarios.nombre AS nombre,
+            usuarios.apellido AS apellido,
+            usuarios.activo AS activo,
+            usuarios.usuarios_tipos_id AS usuarios_tipos_id
+            FROM usuarios
+            INNER JOIN tutorias_estudiantes ON usuarios.ci = tutorias_estudiantes.estudiantes_ci
+            WHERE tutorias_estudiantes.tutorias_id = '$tutorias_id' AND usuarios.activo = 'Activo'
+            ORDER BY nombre ASC;";
 
-            $datos2 = $conexion->query($consulta_datos2);
+            $datos = $conexion->query($consulta_datos);
+            $datos = $datos->fetchAll();
+
+            $consulta_total = "SELECT COUNT(ci)
+            FROM usuarios
+            INNER JOIN tutorias_estudiantes ON usuarios.ci = tutorias_estudiantes.estudiantes_ci
+            WHERE tutorias_estudiantes.tutorias_id = '$tutorias_id' AND usuarios.activo = 'Activo'
+            ORDER BY nombre ASC;";
+
+
+            $total = $conexion->query($consulta_total);
+            $total = (int) $total->fetchColumn();
+
+
+
+            # Verificando tutorias (docente) #
+            $check_tutorias_docente=conexion();
+            $check_tutorias_docente=$check_tutorias_docente->query("SELECT usuarios.*, tutorias.*, tutorias_estudiantes.tutorias_id FROM usuarios, tutorias, tutorias_estudiantes WHERE tutorias_estudiantes.tutorias_id = '$tutorias_id' AND tutorias.docente_ci = usuarios.ci AND tutorias.docente_ci = '$ci'");
+            $tutorias_docente_datos=$check_tutorias_docente->fetchAll(PDO::FETCH_ASSOC);
+
+
+            $consulta_tutorias2 = "SELECT * 
+            FROM tutorias_estudiantes 
+            INNER JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
+            WHERE tutorias_estudiantes.tutorias_id = '".$tutorias_id."' ORDER BY grupo ASC LIMIT $inicio, $registros";
+            $datos2 = $conexion->query($consulta_tutorias2);
             $datos2 = $datos2->fetchAll();
 
-            foreach($datos2 as $rows){
-                if($rows['id']  == NULL)
+            $consulta_tutorias3 = "SELECT *
+            FROM tutorias 
+            WHERE tutorias.id = '".$tutorias_id."'";
+            $datos3 = $conexion->query($consulta_tutorias3);
+            $datos3 = $datos3->fetchAll();
 
+            
+            $verificar_id = "SELECT COUNT(id) FROM tutorias WHERE id = $tutorias_id";
+            $contar = $conexion->query($verificar_id);
+            $contar = (int) $contar->fetchColumn();
+
+
+            if($contar == 0)
+                echo "<script> window.location.href='index.php?vista=home'; </script>";
+
+            $opcionSeleccionada = "";
+            foreach($datos3 as $rows){
+                $opcionSeleccionada = $rows['grupo'];
             }
 
-            $opcionSeleccionada = $_GET['id'];
-            echo 'La tutoría seleccionada es: ' . $opcionSeleccionada;
-        
+            echo '
+                <div class="container is-fluid mt-5 mb-4">
+                    <h1 class="title"> Asistencia </h1>
+                    <h2 class="subtitle"> Pasar Lista del Grupo <br> '.$opcionSeleccionada.' </h2>
+                </div>
+
+                <div class="container pt-3"> 
+            ';
+
+            include "./inc/btn_back.php";
+            
 
             echo '
                 <form action="./php/asistencia_guardar.php" method="POST" class="FormularioAjax" autocomplete="off">
@@ -271,10 +302,13 @@
                         <div class="column">
                             <div class="control">
                                 <label> Ingresar Fecha </label>
-                                <input class="input" type="date" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" min="0" maxlength="50" required>
+                                <input class="input" type="date" name="fecha" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" min="0" maxlength="50" required>
                             </div>
                         </div>
-                    </div>';
+                    </div>
+                    <label> </label>
+                    <input type="hidden" name="ci" value="'.$ci.'">
+                    <input type="hidden" name="id" value="'.$tutorias_id.'">';
 
 
             $tabla="";
@@ -310,15 +344,11 @@
                             <th class="tabla_texto"> Inasistencias <br> Injustifificadas </th>
             ';
 
-            if($total>=1 && $pagina<=$Npaginas){
+            if($total>=1){
                 $contador=$inicio+1;
                 $pag_inicio=$inicio+1;
 
                 foreach($datos as $rows){
-
-                    if($rows['direccion']  === NULL){
-                        $rows['direccion'] = "<i><u> [Direccion no ingresada] </u></i>";
-                    }
 
                     if($rows['usuarios_tipos_id'] === 1){
                         $rows['usuarios_tipos_id'] = "Administrativo";
@@ -333,44 +363,40 @@
                         $rows['usuarios_tipos_id'] = "Rol no definido";
                     }
 
-                    $ci = $rows['ci'];
+                    $ci_estudiantes = $rows['ci'];
                     $nombre = $rows['nombre'];
                     $apellido = $rows['apellido'];
-                    $direccion = $rows['direccion'];
                     $usuarios_tipos_id = $rows['usuarios_tipos_id'];
 
 
                     $tabla.='
                         <tr class="has-text-centered" >
-                            <td class="tabla_texto">'.$ci.'</td>
+                            <td class="tabla_texto">'.$ci_estudiantes.'</td>
                             <td class="tabla_texto">'.$nombre.'</td>
                             <td class="tabla_texto">'.$apellido.'</td>
                     ';
-                    $tabla.='
-                        <td>
-                            <div class="columns">
-                                <div class="column">
-                                    <div class="control">
-                                        <label> Ingresar </label>
-                                        <input class="input" type="number" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" min="0" maxlength="50" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    ';
-                    $tabla.='
-                        <td>
-                            <div class="columns">
-                                <div class="column">
-                                    <div class="control">
-                                        <label> Ingresar </label>
-                                        <input class="input" type="number" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" min="0" maxlength="50" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    ';
 
+                    $tabla .= '<td>';
+                    $tabla .= '<div class="columns">';
+                    $tabla .= '<div class="column">';
+                    $tabla .= '<div class="control">';
+                    $tabla .= '<label> Ingresar </label>';
+                    $tabla .= '<input class="input" type="number" name="inasistencias_justificadas[' . $ci_estudiantes . ']" pattern="[0-9]*" min="0" maxlength="50">';
+                    $tabla .= '</div>';
+                    $tabla .= '</div>';
+                    $tabla .= '</div>';
+                    $tabla .= '</td>';
+                    $tabla .= '<td>';
+                    $tabla .= '<div class="columns">';
+                    $tabla .= '<div class="column">';
+                    $tabla .= '<div class="control">';
+                    $tabla .= '<label> Ingresar </label>';
+                    $tabla .= '<input class="input" type="number" name="inasistencias_injustificadas[' . $ci_estudiantes . ']" pattern="[0-9]*" min="0" maxlength="50">';
+                    $tabla .= '</div>';
+                    $tabla .= '</div>';
+                    $tabla .= '</div>';
+                    $tabla .= '</td>';
+                    $tabla .= '</tr>';
                     $tabla .= '</td>';
 
                     $contador++;
@@ -381,7 +407,7 @@
                 if($total>=1){
                     $tabla.='
                         <tr class="has-text-centered" >
-                            <td colspan="9">
+                            <td colspan="5">
                                 <a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
                                     Haga clic acá para recargar el listado
                                 </a>
@@ -391,34 +417,49 @@
                 }else{
                     $tabla.='
                         <tr class="has-text-centered" >
-                            <td colspan="9">
-                                No hay registros en el sistema
+                            <td colspan="5">
+                                No hay estudiantes en esta tutoría <br>
+                                <a href="index.php?vista=agregar_estudiante&id='.$tutorias_id.'" class="button is-link is-rounded is-small mt-4 mb-4">
+                                    Clik aquí para ingresarlos
+                                </a>
                             </td>
                         </tr>
                     ';
                 }
             }
-                    
+
             $tabla.='</tbody></table></div>';
 
-            if($total>0 && $pagina<=$Npaginas){
-                $tabla.='<p class="has-text-right">Mostrando lista de asistencias del <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+            if($total>0){
+                $tabla.='<p class="has-text-right">Mostrando lista de asistencias del <strong>'.$pag_inicio.'</strong> al <strong>'.$total.'</strong> de un <strong>total de '.$total.'</strong></p>';
             }
 
-            $tabla.='<form>';
+
+            $tabla.='<div class="columns is-flex-touch">
+
+                <div class="column is-half-desktop margen_superior_alerta container form-rest mensaje_alerta margen_alerta_asistencia is-danger pt-4 pr-5 pb-5 pl-5">
+                </div>
+
+                <div class="column is-full-desktop margen_superior">
+                    <div class="section register_guardar">
+                        <div class="has-text-centered tutoria_guardar">
+                            <button class="container button is-link is-rounded pt-5 pr-5 pb-5 pl-5">
+                                <p class="guardar"> Guardar </p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> ';
+
+
+            $tabla.='</form>';
             echo $tabla;
             echo "<br>";
-            
-            if($total>=0 && $pagina<=$Npaginas){
-                echo paginador_tablas($pagina,$Npaginas,$url,7);
-
-            }
 
 
         } else {
             echo 'No se ha seleccionado ninguna tutoría.';
         }
 
-    }
-        
+    }        
 ?>

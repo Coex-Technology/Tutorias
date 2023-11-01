@@ -157,4 +157,20 @@ td {
 .archivo_estilo h2 {
     margin: 0;
 }
-  
+
+
+/* Guardar Asistencia */
+
+.margen_superior{
+    position: absolute;
+    margin-left: 6vh;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.margen_superior_alerta{
+    position: absolute;
+    margin-right: 0vh;
+    margin-top: 0;
+    padding-top: 0;
+}
