@@ -33,7 +33,7 @@
 
 		# Verificando asistencias #
 		$check_asistencias=conexion();
-		$check_asistencias=$check_asistencias->query("SELECT * FROM asistencias WHERE usuarios_ci='$user_ci_del'");
+		$check_asistencias=$check_asistencias->query("SELECT * FROM asistencias WHERE estudiantes_ci='$user_ci_del'");
 
 		# Verificando contactos #
 		$check_contactos=conexion();
@@ -286,7 +286,7 @@
 					<tbody>
 			';
 
-			if($total>=1 && $pagina<=$Npaginas){
+			if($total>=1){
 				$contador=$inicio+1;
 				$pag_inicio=$inicio+1;
 		

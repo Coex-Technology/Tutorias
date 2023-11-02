@@ -24,21 +24,71 @@
         echo '
             <div class="container is-fluid mt-5 mb-4">
                 <h1 class="title"> Materiales </h1>
-                <h2 class="subtitle"> Seleccionar Tutoría </h2>
+                <h2 class="subtitle"> Multimedia Subida </h2>
             </div>
 
-            <div class="container pt-3"> 
+            <div class="container pt-3 b barra_asistencia"> 
         ';
 
         $usuario_ci = $_SESSION['ci'];
         
-
-        if($_SESSION['usuarios_tipos_id'] == 1){
-            $usuario_tipo = "Docente";
-
-            $consulta_datos = "SELECT
-                    (SELECT nombre FROM usuarios WHERE ci = tutorias.docente_ci) AS nombre_docente,
-                    (SELECT apellido FROM usuarios WHERE ci = tutorias.docente_ci) AS apellido_docente,
+        if($_SESSION['usuarios_tipos_id'] == 2){
+            $consulta_datos = "SELECT 
+                    (SELECT nombre FROM usuarios WHERE ci = tutorias.administrador_ci) AS nombre,
+                    (SELECT apellido FROM usuarios WHERE ci = tutorias.administrador_ci) AS apellido,
+                    usuarios.direccion AS direccion,
+                    usuarios.registrado AS registrado,
+                    usuarios.activo AS activo,
+                    tutorias.id AS id,
+                    tutorias.docente_ci AS docente_ci,
+                    tutorias.administrador_ci AS administrador_ci,
+                    tutorias.grupo AS grupo,
+                    tutorias.descripcion AS descripcion,
+                    tutorias.dias AS dias,
+                    tutorias.fecha_inicial AS fecha_inicial,
+                    tutorias.fecha_final AS fecha_final,
+                    tutorias.hora_inicial AS hora_inicial,
+                    tutorias.hora_final AS hora_final,
+                    tutorias.activa AS activa,
+                    tutorias_tipos.id AS tutorias_tipos_id,
+                    tutorias_tipos.nombre_tipo AS nombre_tipo
+                FROM tutorias
+                JOIN usuarios ON tutorias.docente_ci = usuarios.ci
+                JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
+                WHERE tutorias.docente_ci = $usuario_ci;";
+                $usuario_tipo = "Docente";
+        
+        }else if($_SESSION['usuarios_tipos_id'] == 3){
+            $consulta_datos = "SELECT 
+                u.nombre AS nombre,
+                u.apellido AS apellido,
+                u.direccion AS direccion,
+                u.registrado AS registrado,
+                u.activo AS activo,
+                t.id AS id,
+                t.docente_ci AS docente_ci,
+                t.administrador_ci AS administrador_ci,
+                t.grupo AS grupo,
+                t.descripcion AS descripcion,
+                t.dias AS dias,
+                t.fecha_inicial AS fecha_inicial,
+                t.fecha_final AS fecha_final,
+                t.hora_inicial AS hora_inicial,
+                t.hora_final AS hora_final,
+                t.activa AS activa,
+                tt.id AS tutorias_tipos_id,
+                tt.nombre_tipo AS nombre_tipo
+            FROM tutorias_estudiantes te
+            JOIN usuarios u ON te.estudiantes_ci = u.ci
+            JOIN tutorias t ON te.tutorias_id = t.id
+            JOIN tutorias_tipos tt ON t.tutorias_tipos_id = tt.id
+            WHERE u.ci = $usuario_ci;";
+            $usuario_tipo = "Estudiante";
+    
+        }else{
+            $consulta_datos = "SELECT 
+                    (SELECT nombre FROM usuarios WHERE ci = tutorias.docente_ci) AS nombre,
+                    (SELECT apellido FROM usuarios WHERE ci = tutorias.docente_ci) AS apellido,
                     usuarios.direccion AS direccion,
                     usuarios.registrado AS registrado,
                     usuarios.activo AS activo,
@@ -59,34 +109,7 @@
                 JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
                 JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
                 WHERE usuarios.ci = $usuario_ci;";
-
-
-        }elseif($_SESSION['usuarios_tipos_id'] == 2){
-            $usuario_tipo = "Admin.";
-
-            $consulta_datos = "SELECT 
-                    (SELECT nombre FROM usuarios WHERE ci = tutorias.administrador_ci) AS nombre_administrador,
-                    (SELECT apellido FROM usuarios WHERE ci = tutorias.administrador_ci) AS apellido_administrador,
-                    usuarios.direccion AS direccion,
-                    usuarios.registrado AS registrado,
-                    usuarios.activo AS activo,
-                    tutorias.id AS id,
-                    tutorias.docente_ci AS docente_ci,
-                    tutorias.administrador_ci AS administrador_ci,
-                    tutorias.grupo AS grupo,
-                    tutorias.descripcion AS descripcion,
-                    tutorias.dias AS dias,
-                    tutorias.fecha_inicial AS fecha_inicial,
-                    tutorias.fecha_final AS fecha_final,
-                    tutorias.hora_inicial AS hora_inicial,
-                    tutorias.hora_final AS hora_final,
-                    tutorias.activa AS activa,
-                    tutorias_tipos.id AS tutorias_tipos_id,
-                    tutorias_tipos.nombre_tipo AS nombre_tipo
-                FROM tutorias
-                JOIN usuarios ON tutorias.docente_ci = usuarios.ci
-                JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-                WHERE usuarios.ci = $usuario_ci;";	
+                $usuario_tipo = "Docente";
         }
         
 
@@ -118,7 +141,7 @@
 
                         <tr class="has-text-centered">
                             <th class="tabla_texto"> Grupo </th>
-                            <th class="tabla_texto"> '.$usuario_tipo.'</th>
+                            <th class="tabla_texto"> '.$usuario_tipo.' </th>
                             <th class="tabla_texto"> Dias </th>
                             <th class="tabla_texto"> Tipo </th>
                             <th class="tabla_texto"> Opciones </th>
@@ -169,22 +192,15 @@
                     <td class="tabla_texto">'.$rows['grupo'].'</td>';
 
 
-            if($_SESSION['usuarios_tipos_id'] == 1)
             $tabla .= '
-                <td class="tabla_texto">'.$rows['nombre_docente'].' '.$rows['apellido_docente'].'</td>';
-
-            if($_SESSION['usuarios_tipos_id'] == 2)
-            $tabla .= '
-                <td class="tabla_texto">'.$rows['nombre_administrador'].' '.$rows['apellido_administrador'].'</td>';
-
-            $tabla .= '
+                <td class="tabla_texto">'.$rows['nombre'].' '.$rows['apellido'].'</td>
                 <td class="tabla_texto">'.$rows['dias'].'</td>
-                <td class="tabla_texto">'.$rows['nombre_tipo'].'</td>
-                <td class="tabla_texto is-fullwidth">
-                    <a href="'.$url.'&id='.$rows['id'].'" class="button is-success is-rounded is-small"> Seleccionar </a>
+                <td class="tabla_texto">'.$rows['nombre_tipo'].'</td>';
+
+            $tabla .= '<td class="tabla_texto is-fullwidth">
+                    <a href="'.$url.'&id='.$rows['id'].'&sel=true" class="button is-success is-rounded is-small"> Seleccionar </a>
                 </td>
             </tr>';
-
         }
 
         $tabla.='</tbody></table></div>';

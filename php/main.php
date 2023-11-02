@@ -120,4 +120,29 @@
 		return $tabla;
 	}
 
+	function formatear_cedula($ci) {
+		$ci = preg_replace("/[^0-9]/", "", $ci);
+	
+		if (strlen($ci) == 7) {
+			return substr($ci, 0, 3) . '.' . substr($ci, 3, 3) . '-' . substr($ci, 6, 1);
+		} elseif (strlen($ci) == 8) {
+			return substr($ci, 0, 1) . '.' . substr($ci, 1, 3) . '.' . substr($ci, 4, 3) . '-' . substr($ci, 7, 1);
+		} elseif (strlen($ci) == 9) {
+			return substr($ci, 0, 2) . '.' . substr($ci, 2, 3) . '.' . substr($ci, 5, 3) . '-' . substr($ci, 8, 1);
+		}
+	
+		return $ci;
+	}
+
+	function formatear_telefono($telefono) {
+		$telefono = preg_replace("/[^0-9]/", "", $telefono);
+	
+		if (substr($telefono, 0, 1) == "9") {
+			return "0" . substr($telefono, 0, 2) . '.' . substr($telefono, 2, 3) . '.' . substr($telefono, 5, 3);
+		}else{
+			return substr($telefono, 0, 4) . '.' . substr($telefono, 4, 4);
+		}
+		return $telefono;
+	}	
+
 ?>

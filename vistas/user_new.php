@@ -17,7 +17,7 @@
                 <h2 class="subtitle"> Registrar usuario </h2>           
         ';
         include "./inc/btn_back.php";
-        $usuario_registrado = "No Registrado";
+        $usuario_registrado = "Registrado";
 
     }
 
@@ -66,7 +66,7 @@
                 <div class="column">
                     <div class="control">
                         <label> Numero de Contacto <b class="asterisco">*</b> </label>
-                        <input class="input" type="text" id="telefono" name="telefono" pattern="[0-9+ ]{4,50}" maxlength="50" required>
+                        <input class="input" type="text" id="telefono" name="telefono" pattern="[0-9]{8,9}" maxlength="9" required>
                     </div>
                 </div>
                 <div class="column">

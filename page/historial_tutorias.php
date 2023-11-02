@@ -1,34 +1,51 @@
 <?php
 
-    $nombre = $_SESSION['nombre'];
-    $apellido = $_SESSION['apellido'];
-    $usuarios_tipos_nombre = $_SESSION['usuarios_tipos_nombre'];
+    $estudiante = $_SESSION['usuarios_tipos_id'] == 3;
+    if($estudiante)
+        echo "<script> window.location.href='index.php?vista=home'; </script>";
+    
+
+    require_once "./inc/session_start.php";
+	require_once "./php/main.php";
+
+    $id = (isset($_GET['id'])) ? $_GET['id'] : 0;
+    $id = limpiar_cadena($id);
+    $activa = "Activa";
+
+    if (isset($id) && $id !== "") {
+        $actualizar_datos_tutoria = conexion()->prepare("UPDATE tutorias SET activa=:activa WHERE id=:id");
+
+        $marcadores = [
+            ":id" => $id,
+            ":activa" => $activa,
+        ];
+        $actualizar_datos_tutoria->execute($marcadores);
+    }
 
     echo '
         <div class="mt-6"> </div>
 
         <div class="container is-fluid">
-            <h1 class="has-text-centered title"> Historial de Tutorías </h1>
-            <h2 class="has-text-centered subtitle"> Tutorías vinculadas a <br> '.$nombre.' '.$apellido.' ['.$usuarios_tipos_nombre.'] </h2>
+            <h1 class="has-text-centered title"> Historial de tutorias </h1>
+            <h2 class="has-text-centered subtitle"> Lista de tutoria que han sido archivados </h2>
         </div>
         
         <div class="container mt-5">  
     ';
 
-    $estudiante = $_SESSION['usuarios_tipos_id'] == 3;
-
-    if($estudiante)
-        echo "<script> window.location.href='index.php?vista=home'; </script>";
+    if ($actualizar_datos_tutoria->rowCount() > 0) {
+        echo '
+            <div class="notification is-info is-light">
+                <strong>¡TUTORÍA INGRESADA!</strong><br>
+                El tutoría se ha dado de alta en el sistema
+            </div>
+        ';
+    }
 
 
     echo '<div class="container mt-5">' ;
     
     require_once "./php/main.php";
-
-    /*Eliminar tutoria*/
-    if(isset($_GET['user_ci_del'])){
-        require_once "./php/tutoria_eliminar.php";
-    }
 
     if(!isset($_GET['page'])){
         $pagina=1;
@@ -43,11 +60,13 @@
     $busqueda="";
     $url="index.php?vista=historial_tutorias&page=";
     $registros=5;
-    echo '<div class="mt-6"> </div>' ;
+    echo '<div class="mt-4"> </div>' ;
 
 
-    # Paginador Tutorías #
+    # Paginador tutoria #
     require_once "./php/tutoria_lista.php";
 
     echo '</div>';
+
+    $actualizar_datos_tutoria = null;
 ?>

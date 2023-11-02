@@ -12,6 +12,14 @@
 	$docente = $_SESSION['usuarios_tipos_id'] == 2;
 	$estudiante = $_SESSION['usuarios_tipos_id'] == 3;
 
+	if($historial_tutorias){
+		$consulta_activa = "'No Activa'";
+
+	}else{
+		$consulta_activa = "'Activa'";
+	}
+
+
 	if($administrador){
 		$usuario_tipo = "Docente";
 
@@ -37,14 +45,14 @@
 			FROM tutorias
 			JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE tutorias.administrador_ci = $ci_usuario
+			WHERE tutorias.administrador_ci = $ci_usuario AND tutorias.activa = $consulta_activa
 			ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
 		$consulta_total = "SELECT COUNT(*)
 			FROM tutorias
 			JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE usuarios.ci = $ci_usuario
+			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa
 			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
 
 
@@ -74,14 +82,14 @@
 			FROM tutorias
 			JOIN usuarios ON tutorias.docente_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE usuarios.ci = $ci_usuario
+			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa
 			ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
 		$consulta_total = "SELECT COUNT(*)
 			FROM tutorias
 			JOIN usuarios ON tutorias.docente_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE usuarios.ci = $ci_usuario
+			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa
 			ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
 
@@ -113,7 +121,7 @@
             JOIN usuarios ON tutorias_estudiantes.estudiantes_ci = usuarios.ci
             JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
             JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-            WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario
+            WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario AND tutorias.activa = $consulta_activa
             ORDER BY nombre ASC LIMIT $inicio, $registros;";
 
 
@@ -122,7 +130,7 @@
 			JOIN usuarios ON tutorias_estudiantes.estudiantes_ci = usuarios.ci
 			JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario
+			WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario AND tutorias.activa = $consulta_activa
 			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
 
 	}
@@ -248,7 +256,6 @@
 		$pag_inicio=$inicio+1;
 
 		foreach($datos as $rows){
-
 			if($rows['grupo']  == NULL)
 				$rows['grupo'] = "<i><u> [Grupo no especificado] </u></i>";
 
@@ -330,9 +337,9 @@
 
 			if($historial_tutorias && !($estudiante))
 			$tabla.='
-				<div>
-					<div class="contenedor_opciones pr-1">
-						<a href="index.php?vista=tutorship_update&docente_ci='. $rows['id'] .'" class="button is-success is-rounded is-small opciones"> Dar de Alta </a>
+				<td class="tabla_texto is-fullwidth pl-2 pr-2">
+					<div class="pr-1">
+						<a href="index.php?vista=historial_tutorias&page=1&id='.$rows['id'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
 					</div>
 				</td>';
 		$contador++;
@@ -363,7 +370,7 @@
 				<tr class="has-text-centered" >
 					<td colspan='.$colspan.'>
 						<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
-						<a href="index.php?vista=agregar_estudiante" class="button is-link is-rounded is-small mt-4 mb-4">
+						<a href="index.php?vista=user_new" class="button is-link is-rounded is-small mt-4 mb-4">
 							Haga clic aquí para agregarlo
 						</a>
 						<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
@@ -391,7 +398,7 @@
 		echo paginador_tablas($pagina,$Npaginas,$url,7);
 	}
 
-	if($tutorship_list)
+	if($tutorship_list || $historial_tutorias)
         echo "<br> <br>";
 
 ?>

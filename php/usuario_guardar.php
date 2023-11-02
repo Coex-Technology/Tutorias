@@ -70,7 +70,7 @@
         exit();
     }
 
-    if(verificar_datos("[0-9+ ]{4,50}",$telefono)){
+    if(verificar_datos("[0-9]{8,9}",$telefono)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>

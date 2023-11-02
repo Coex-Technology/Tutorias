@@ -135,7 +135,7 @@
 			}
 
 			if($rows['usuarios_tipos_id'] == 1){
-				$rows['usuarios_tipos_id'] = "Administrativo";
+				$rows['usuarios_tipos_id'] = "Administrador";
 
 			}elseif($rows['usuarios_tipos_id'] == 2){
 				$rows['usuarios_tipos_id'] = "Docente";

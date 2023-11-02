@@ -13,36 +13,36 @@
         </p>
     </div>
     <p class="panel-tabs">
-        <a data-toggle="tutorias" class="puntos_suspensivos mr-4"> Tutorías </a>
-        <a data-toggle="estudiantes" class="puntos_suspensivos mr-4"> Estudiantes </a>
+        <a data-toggle="tutorias" class="puntos_suspensivos"> Tutoría </a>
+        <a data-toggle="estudiantes" class="puntos_suspensivos"> Estudiantes </a>
         <a data-toggle="docente" class="puntos_suspensivos"> Docente </a>
     </p>
 
 
     <div class="panel-block hidden-opciones" data-option="tutorias">
 
-        <a href="index.php?vista=chat_administrador" class="panel-block is-active">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Solicitar Nueva Tutoría
-        </a>
-        <a href="index.php?vista=tutorship_list" class="panel-block">
+        <a href="index.php?vista=tutorship_list" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
             Mostrar lista completa de tutorías
+        </a>
+        <a href="index.php?vista=horarios_tutorias" class="panel-block">
+            <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+            Horarios de las Tutorías
         </a>
 
     </div>
     
     <div class="panel-block hidden-opciones" data-option="estudiantes">
 
-        <a href="index.php?vista=user_list" class="panel-block is-active">
+        <a href="index.php?vista=user_search&buscar=false" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
-            Lista de Estudiantes
+            Buscar otros Usuarios
         </a>
         <a href="index.php?vista=consult_attendance" class="panel-block">
             <span class="panel-icon">
@@ -54,18 +54,11 @@
     </div>
     <div class="panel-block hidden-opciones" data-option="docente">
 
-        <a href="index.php?vista=chat_docente" class="panel-block is-active">
+        <a href="index.php?vista=multimedia_subida" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
-            Enviar Mensaje al Docente
-        </a>
-
-        <a href="index.php?vista=multimedia_subida" class="panel-block">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Multimedia
+            Multimedia Subida
         </a>
     </div>
 

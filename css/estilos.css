@@ -174,3 +174,13 @@ td {
     margin-top: 0;
     padding-top: 0;
 }
+
+/* Horarios */
+
+.recordatorios{
+    margin-left: 13vh;
+}
+
+.sin_barra_horarios{
+    overflow-x: hidden;
+}

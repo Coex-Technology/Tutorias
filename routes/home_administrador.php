@@ -13,7 +13,7 @@
         </p>
     </div>
     <p class="panel-tabs">
-        <a data-toggle="tutorias" class="puntos_suspensivos"> Tutorías </a>
+        <a data-toggle="tutorias" class="puntos_suspensivos"> Tutoría </a>
         <a data-toggle="estudiantes" class="puntos_suspensivos"> Estudiantes </a>
         <a data-toggle="docente" class="puntos_suspensivos"> Docente </a>
         <a data-toggle="opciones" class="puntos_suspensivos"> Otros </a>
@@ -46,37 +46,24 @@
     
     <div class="panel-block hidden-opciones" data-option="estudiantes">
 
-        <a href="index.php?vista=solicitud_acceso" class="panel-block is-active">
+        <a href="index.php?vista=user_search&buscar=false" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
-            Solicitud de Acceso de Estudiantes
+            Buscar Estudiantes
         </a>
-        <a href="index.php?vista=attendance" class="panel-block">
+        <a href="index.php?vista=consult_attendance" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
             Asistencia de los Estudiantes
-        </a>
-        <a href="index.php?vista=chat_estudiante" class="panel-block is-active">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Enviar Mensaje al Estudiante
         </a>
 
     </div>
 
     <div class="panel-block hidden-opciones" data-option="docente">
 
-        <a href="index.php?vista=chat_docente" class="panel-block is-active">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Enviar Mensaje al Docente
-        </a>
-
-        <a href="index.php?vista=consult_attendance" class="panel-block">
+        <a href="index.php?vista=consult_attendance" class="panel-block is-active">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
@@ -94,7 +81,7 @@
             Historial de Usuarios
         </a>
 
-        <a href="index.php?vista=multimedia" class="panel-block">
+        <a href="index.php?vista=multimedia_subida" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>

@@ -10,7 +10,7 @@
     background: url(../img/fondo_reloj.jpg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 50vh;
+    width: 70vh;
     margin-left: 25vh;
     margin-top: 8vh;
 }
@@ -18,7 +18,7 @@
 .reloj_body {
     background-attachment: fixed;
     background-color: transparent;
-    color: #fff;
+    color: #fff !important;
     display: flex;
     flex-direction: column;
     height: 100vh;
