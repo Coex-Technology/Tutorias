@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 15:07:01
+-- Tiempo de generación: 02-11-2023 a las 19:07:19
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -28,13 +28,40 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asistencias` (
-  `usuarios_ci` int(11) NOT NULL,
   `tutorias_id` bigint(20) NOT NULL,
-  `asistencias` int(11) DEFAULT NULL,
+  `estudiantes_ci` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `docente_ci` int(11) NOT NULL,
+  `fecha_ingreso` date NOT NULL,
   `inasistencias_justificadas` int(11) DEFAULT NULL,
-  `inasistencias_injustificadas` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL
+  `inasistencias_injustificadas` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `asistencias`
+--
+
+INSERT INTO `asistencias` (`tutorias_id`, `estudiantes_ci`, `fecha`, `docente_ci`, `fecha_ingreso`, `inasistencias_justificadas`, `inasistencias_injustificadas`) VALUES
+(11111111030625, 22222222, '2023-06-14', 11111111, '2023-11-02', 1, 3),
+(11111111030625, 22222222, '2023-07-13', 11111111, '2023-11-02', 12, 10),
+(11111111030625, 22222222, '2023-11-01', 11111111, '2023-11-01', 0, 0),
+(11111111030625, 22222222, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
+(11111111030625, 22222222, '2023-11-05', 11111111, '2023-11-02', 20, 0),
+(11111111030625, 22222222, '2023-11-11', 11111111, '2023-11-02', 0, 4),
+(11111111030625, 22222222, '2023-11-17', 11111111, '2023-11-02', 0, 0),
+(11111111030625, 22222222, '2023-11-26', 11111111, '2023-11-01', 1, 2),
+(11111111030625, 54893231, '2023-07-13', 11111111, '2023-11-02', 2, 23),
+(11111111030625, 54893231, '2023-11-01', 11111111, '2023-11-01', 0, 0),
+(11111111030625, 54893231, '2023-11-05', 11111111, '2023-11-02', 20, 0),
+(11111111030625, 54893231, '2023-11-17', 11111111, '2023-11-02', 0, 0),
+(11111111030625, 54893231, '2023-11-26', 11111111, '2023-11-01', 0, 0),
+(11111111030625, 54893232, '2023-11-01', 11111111, '2023-11-01', 0, 0),
+(11111111030625, 54893232, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
+(11111111030625, 54893232, '2023-11-05', 11111111, '2023-11-02', 20, 1),
+(11111111030625, 54894723, '2023-10-05', 11111111, '2023-10-31', 1, 7),
+(11111111030625, 54894723, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
+(12345674061048, 22222222, '2023-11-12', 11111111, '2023-11-02', 1, 3),
+(12345674061048, 54894723, '2023-11-12', 11111111, '2023-11-02', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -59,6 +86,7 @@ INSERT INTO `contactos` (`ci`, `telefono`, `email`) VALUES
 (12345678, 95123456, 'santiagobrignoni@gmail.com'),
 (12345678, 97123456, 'sass@gmail.com'),
 (22222222, 95123456, 'santiagobrignoni@gmail.com'),
+(43030123, 97323212, 'santino@gmail.com'),
 (54893231, 93232142, 'santiagobrignoni6@outlook.com'),
 (54893232, 93254143, 'camila36@outlook.com'),
 (54894723, 93254143, 'micaela@gmail.com'),
@@ -69,19 +97,6 @@ INSERT INTO `contactos` (`ci`, `telefono`, `email`) VALUES
 (111111112, 97123456, 'sass@gmail.com'),
 (111111112, 98123456, 'santiagobrignoni@gmail.com'),
 (111111112, 98123457, 'sasss@gmail.com');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `examenes`
---
-
-CREATE TABLE `examenes` (
-  `id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `hora` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -141,11 +156,11 @@ CREATE TABLE `tutorias` (
 --
 
 INSERT INTO `tutorias` (`id`, `docente_ci`, `administrador_ci`, `grupo`, `descripcion`, `dias`, `fecha_inicial`, `fecha_final`, `hora_inicial`, `hora_final`, `activa`, `asignaturas_id`, `tutorias_tipos_id`) VALUES
-(11111111030625, 11111111, 56274580, '2°Bachllerato - Matemática', '[No se ha ingresado]', 'Viernes', '2023-03-03', '2023-05-12', '15:00:00', '16:30:00', 'Activa', NULL, 3),
+(11111111030625, 11111111, 12345678, '2°Bachillerato - Matemática', '[No se ha ingresado]', 'Viernes', '2023-03-03', '2023-05-12', '15:00:00', '16:30:00', 'Activa', NULL, 3),
 (12345673020530, 12345673, 56274580, '1°Bachillerato -  Ingles', '[No se ha ingresado]', 'Lunes', '2023-10-09', '2023-10-23', '05:30:00', '07:00:00', 'Activa', NULL, 4),
-(12345673060555, 12345673, 56274580, '1°Ciclo Basico - Ciencias Físicas', '[No se ha ingresado]', 'Lunes', '2023-05-08', '2023-06-12', '14:10:00', '14:55:00', 'Activa', NULL, 3),
-(12345674040800, 12345674, 12345678, '3°Ciclo Basico - Idioma Español', '[No se ha ingresado]', 'Miércoles', '2023-10-04', '2023-10-18', '08:00:00', '09:15:00', 'Activa', NULL, 5),
-(12345674061048, 11111111, 12345678, '2°Ciclo Basico - Historia', '[No se ha ingresado]', 'Viernes', '2023-10-06', '2023-10-16', '14:10:00', '14:55:00', 'Activa', NULL, 6),
+(12345673060555, 12345673, 56274580, '1°Ciclo Básico - Ciencias Físicas', '[No se ha ingresado]', 'Lunes', '2023-05-08', '2023-06-12', '14:10:00', '14:55:00', 'Activa', NULL, 3),
+(12345674040800, 12345674, 12345678, '3°Ciclo Básico - Idioma Español', '[No se ha ingresado]', 'Miércoles', '2023-10-04', '2023-10-18', '08:00:00', '09:15:00', 'Activa', NULL, 5),
+(12345674061048, 11111111, 12345678, '2°Ciclo Básico - Historia', '[No se ha ingresado]', 'Viernes', '2023-10-06', '2023-10-16', '14:10:00', '14:55:00', 'Activa', NULL, 6),
 (12345674071437, 12345674, 12345678, '3°Bachillerato - Sociología', '[No se ha ingresado]', 'Sábado', '2023-10-28', '2023-10-28', '19:45:00', '20:30:00', 'Activa', NULL, 5);
 
 -- --------------------------------------------------------
@@ -156,7 +171,6 @@ INSERT INTO `tutorias` (`id`, `docente_ci`, `administrador_ci`, `grupo`, `descri
 
 CREATE TABLE `tutorias_estudiantes` (
   `tutorias_id` bigint(20) NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `estudiantes_ci` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -164,14 +178,15 @@ CREATE TABLE `tutorias_estudiantes` (
 -- Volcado de datos para la tabla `tutorias_estudiantes`
 --
 
-INSERT INTO `tutorias_estudiantes` (`tutorias_id`, `descripcion`, `estudiantes_ci`) VALUES
-(11111111030625, NULL, 22222222),
-(12345674040800, NULL, 22222222),
-(12345674040800, NULL, 54893232),
-(12345674040800, NULL, 54894723),
-(12345674061048, NULL, 111111111),
-(12345674071437, NULL, 54893232),
-(12345674071437, NULL, 111111111);
+INSERT INTO `tutorias_estudiantes` (`tutorias_id`, `estudiantes_ci`) VALUES
+(11111111030625, 22222222),
+(11111111030625, 54893231),
+(11111111030625, 54894723),
+(11111111030625, 111111111),
+(12345674040800, 22222222),
+(12345674040800, 54893231),
+(12345674061048, 22222222),
+(12345674061048, 54894723);
 
 -- --------------------------------------------------------
 
@@ -221,11 +236,12 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`ci`, `clave`, `nombre`, `apellido`, `direccion`, `registrado`, `activo`, `usuarios_tipos_id`) VALUES
 (11111111, '$2y$10$8Xp3OXSMgaGTLFF7Y4Og2OR/E/Ki0ByWoypxm5ridRqcsCnKxmJ2u', 'Lucía', 'Perez', 'Florida Cowork', 'Registrado', 'Activo', 2),
-(12345673, '$2y$10$EEZb7WR8zu/UW7XoRoIzveZ/Gb.ovAr1iaqes4lTTfgELcrF0NZcS', 'Nicolás', 'Rodríguez', 'en mi casa', 'Registrado', 'Activo', 2),
-(12345674, '$2y$10$kz5zOKABrIrhLBHaSpqS4ewzjTHEd7o1hidLNlggPZ/d.wesC.dIC', 'Facundo', 'Martínez', 'Florida Cowork', 'Registrado', 'Activo', 2),
-(12345677, '$2y$10$9sGDldX4S50BKqutRU4yPuggYONrZSdQZdahuMcvLH1.MNlBjQp8i', 'Juan', 'Torres', 'Florida Cowork', 'No Registrado', 'Activo', 2),
+(12345673, '$2y$10$EEZb7WR8zu/UW7XoRoIzveZ/Gb.ovAr1iaqes4lTTfgELcrF0NZcS', 'Nicolás', 'Rodríguez', 'en mi casa', 'Registrado', 'No Activo', 2),
+(12345674, '$2y$10$kz5zOKABrIrhLBHaSpqS4ewzjTHEd7o1hidLNlggPZ/d.wesC.dIC', 'Facundo', 'Martínez', 'Florida Cowork', 'Registrado', 'No Activo', 2),
+(12345677, '$2y$10$9sGDldX4S50BKqutRU4yPuggYONrZSdQZdahuMcvLH1.MNlBjQp8i', 'Juan', 'Torres', 'Florida Cowork', 'No Registrado', 'No Activo', 2),
 (12345678, '$2y$10$pAHDAxlfm3Gq.XXo5MbMVesfQ3OT2EcWWWIThc9xHgcN3hpdfbDj6', 'Santiago', 'Brignoni', 'Florida Cowork', 'Registrado', 'Activo', 1),
 (22222222, '$2y$10$sApQDWDwtu.It/v9rVufLeOkDzI6BptzywFRqDqhLwIcdM00FPkMG', 'Camila', 'Muñoz', 'Florida', 'Registrado', 'Activo', 3),
+(43030123, '$2y$10$WfCfhGYkBcCGkNeyoxHTm.43h9KCNuYzHcATdxEDstln70BZewd9W', 'Santino', 'Muñoz', 'Sarandi Grande', 'Registrado', 'Activo', 1),
 (54893231, '$2y$10$tw8sq7xMphDVet9pVsEWrO7H5GHrHPLEC0I5O1YvpEGCRTzNwnATG', 'Matias', 'Olivera', '25 de Mayo', 'Registrado', 'Activo', 3),
 (54893232, '$2y$10$smqXLS7xwuSX7yCsen0xhuIrhg45n74EWiWw154B/AmTkWHQ1MyWG', 'Camila', 'Perez', 'Cardal', 'Registrado', 'Activo', 3),
 (54894723, '$2y$10$Iz5e1Tmj9beEByLgMwf1XOOjw8vg.QY4y6h0VM5PqAH6rPz5ByAXa', 'Micaela', 'Vega', 'Sarandi Grande', 'Registrado', 'Activo', 3),
@@ -265,21 +281,17 @@ INSERT INTO `usuarios_tipos` (`id`, `categoria`, `permisos`) VALUES
 -- Indices de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  ADD PRIMARY KEY (`usuarios_ci`,`tutorias_id`),
-  ADD KEY `usuarios_ci` (`usuarios_ci`),
-  ADD KEY `tutorias_id` (`tutorias_id`);
+  ADD PRIMARY KEY (`tutorias_id`,`estudiantes_ci`,`fecha`),
+  ADD KEY `tutorias_id` (`tutorias_id`),
+  ADD KEY `docente_ci` (`docente_ci`),
+  ADD KEY `estudiantes_ci2` (`estudiantes_ci`),
+  ADD KEY `estudiantes_ci` (`estudiantes_ci`);
 
 --
 -- Indices de la tabla `contactos`
 --
 ALTER TABLE `contactos`
   ADD PRIMARY KEY (`ci`,`telefono`);
-
---
--- Indices de la tabla `examenes`
---
-ALTER TABLE `examenes`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `repositorios`
@@ -304,9 +316,8 @@ ALTER TABLE `tutorias`
 --
 ALTER TABLE `tutorias_estudiantes`
   ADD PRIMARY KEY (`tutorias_id`,`estudiantes_ci`),
-  ADD KEY `usuarios_ci` (`estudiantes_ci`),
   ADD KEY `tutorias_id` (`tutorias_id`),
-  ADD KEY `estudiantes_ci` (`estudiantes_ci`);
+  ADD KEY `estudiantes_ci_2` (`estudiantes_ci`);
 
 --
 -- Indices de la tabla `tutorias_tipos`
@@ -335,8 +346,8 @@ ALTER TABLE `usuarios_tipos`
 -- Filtros para la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  ADD CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`usuarios_ci`) REFERENCES `usuarios` (`ci`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `asistencias_ibfk_2` FOREIGN KEY (`tutorias_id`) REFERENCES `tutorias` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `asistencias_ibfk_2` FOREIGN KEY (`tutorias_id`) REFERENCES `tutorias` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `asistencias_ibfk_3` FOREIGN KEY (`docente_ci`) REFERENCES `usuarios` (`ci`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `contactos`
@@ -363,8 +374,8 @@ ALTER TABLE `tutorias`
 -- Filtros para la tabla `tutorias_estudiantes`
 --
 ALTER TABLE `tutorias_estudiantes`
-  ADD CONSTRAINT `tutorias_estudiantes_ibfk_2` FOREIGN KEY (`estudiantes_ci`) REFERENCES `usuarios` (`ci`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `tutorias_estudiantes_ibfk_3` FOREIGN KEY (`tutorias_id`) REFERENCES `tutorias` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `tutorias_estudiantes_ibfk_3` FOREIGN KEY (`tutorias_id`) REFERENCES `tutorias` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `tutorias_estudiantes_ibfk_4` FOREIGN KEY (`estudiantes_ci`) REFERENCES `usuarios` (`ci`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
