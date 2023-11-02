@@ -388,9 +388,11 @@
 
             $consulta_total = "SELECT COUNT(usuarios.ci) FROM usuarios WHERE usuarios.activo = 'Activo' AND usuarios_tipos_id = 3 ORDER BY usuarios.ci";
 
-            echo '<div class="mb-5">';
-            include "./inc/btn_back.php";
-            echo '</div>';
+            echo '<div class="mb-5">
+                    <p class="has-text-right">
+                        <a href="index.php?vista=home" class="button is-link is-rounded btn-back"><- Regresar </a>
+                    </p>
+                </div>';
 
             $datos = $conexion->query($consulta_datos_usuarios);
             $datos = $datos->fetchAll();
