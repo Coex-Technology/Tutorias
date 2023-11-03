@@ -37,9 +37,6 @@
 
 				<input type="hidden" name="img_del_id" value="<?php echo $id_completo; ?>">
 
-				<p class="has-text-centered">
-					<button type="submit" class="button is-danger is-rounded">Eliminar imagen</button>
-				</p>
 			</form>
 			<?php }else{ ?>
 			<figure class="image mb-6">
@@ -48,41 +45,69 @@
 			<?php } ?>
 		</div>
 		<div class="column">
-			<form class="mb-6 has-text-centered FormularioAjax" action="./php/repositorios_img_actualizar.php" method="POST" enctype="multipart/form-data" autocomplete="off" >
+			<div class="mb-6 has-text-centered FormularioAjax">
 
 				<h4 class="title is-4 mb-4"><?php echo $datos['tema']; ?></h4>
 				
-				<label> Foto o imagen a actualizar </label><br>
+				<label> Imagen Subida </label><br><br><br>
 
 				<input type="hidden" name="img_up_id" value="<?php echo $id_completo; ?>">
 
-				<div class="file has-name is-horizontal is-justify-content-center mb-6">
-				  	<label class="file-label mt-5 ml-6">
-				    	<input class="file-input" type="file" name="repositorios_foto" accept=".jpg, .png, .jpeg" >
-				    	<span class="file-cta">
-				      		<span class="file-label">Imagen</span>
-				    	</span>
-				    	<span class="file-name">JPG, JPEG, PNG. (MAX 10MB)</span>
-				  	</label>
-					<div class="column is-centered">
-						<div>
-							<label> &nbsp; Tipo de Archivo <b class="asterisco">*</b></label><br>
-								
-							<div class="select is-rounded">
-								<select name="formulario_tipo_archivo" onchange="mostrarInformacion(this)">
-									<option> <p class="option"> Imágenes </p> </option>
-									<option> <p class="option"> Textos </p> </option>
-									<option> <p class="option"> Audios </p> </option>
-									<option> <p class="option"> Videos </p> </option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
 				<p class="has-text-centered">
-					<button type="submit" class="button is-success is-rounded">Actualizar</button>
+					<?php
+						$consulta_datos = "SELECT
+						repositorios.id_archivo AS archivo_id,
+						repositorios.usuarios_ci AS usuarios_ci,
+						repositorios.tutorias_id AS tutorias_id,
+						repositorios.tema AS tema,
+						repositorios.nombre AS nombre_archivo,
+						repositorios.comentarios AS comentarios,
+						repositorios.tipo_archivo AS tipo_archivo,
+						repositorios.fecha_visualizacion AS fecha_visualizacion,
+						repositorios.hora_visualizacion AS hora_visualizacion,
+						repositorios.fecha_eliminacion AS fecha_eliminacion,
+						repositorios.hora_eliminacion AS hora_eliminacion,
+						repositorios.activo AS activo,
+						usuarios.nombre AS nombre,
+						usuarios.apellido AS apellido,
+						usuarios.usuarios_tipos_id AS usuarios_tipos_id,
+						tutorias.grupo AS grupo,
+						tutorias.dias AS dias,
+						tutorias.fecha_inicial AS fecha_inicial,
+						tutorias.fecha_final AS fecha_final,
+						tutorias.hora_inicial AS hora_inicial,
+						tutorias.hora_final AS hora_final
+						FROM repositorios
+						JOIN usuarios ON repositorios.usuarios_ci=usuarios.ci
+						JOIN tutorias ON repositorios.tutorias_id=tutorias.id
+						WHERE tutorias_id = $tutorias_id AND repositorios.activo = 'Activo'";
+
+						$conexion=conexion();
+						$datos = $conexion->query($consulta_datos);
+						$datos = $datos->fetchAll();
+
+						foreach($datos as $rows){
+							$contador = 1;
+							$fecha_1 = $rows['fecha_visualizacion'];
+							$fecha_visualizacion = date("d/m/Y", strtotime($fecha_1));
+							$fecha_2 = $rows['fecha_eliminacion'];
+							$fecha_eliminacion = date("d/m/Y", strtotime($fecha_2));
+		
+							$hora_1 = $rows['hora_visualizacion'];
+							$hora_visualizacion = date("H:i", strtotime($hora_1));
+							$hora_2 = $rows['hora_eliminacion'];
+							$hora_eliminacion = date("H:i", strtotime($hora_2));
+
+							echo '<p>
+								<strong> Subido por '.$rows['nombre'].' '.$rows['apellido'].'</strong><br>
+								<strong>Tema:</strong> '.$rows['tema'].'<br>
+								<strong>Subido el:</strong> '.$fecha_visualizacion.' al las '.$hora_visualizacion.'<br>
+								<strong>Se Elimina el:</strong> '.$fecha_eliminacion.' al las '.$hora_eliminacion.'<br>
+							</p>';
+						}
+					?>
 				</p>
-			</form>
+			</div>
 		</div>
 	</div>
 	<?php 

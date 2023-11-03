@@ -26,7 +26,7 @@
         <div class="mt-6"> </div>
 
         <div class="container is-fluid">
-            <h1 class="has-text-centered title"> Historial de tutorias </h1>
+            <h1 class="has-text-centered title"> Historial de Tutorias </h1>
             <h2 class="has-text-centered subtitle"> Lista de tutoria que han sido archivados </h2>
         </div>
         

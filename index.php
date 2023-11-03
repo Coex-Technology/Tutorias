@@ -23,7 +23,7 @@
         }
 
         $vista = $_GET['vista'] . ".php";
-        $directoriosPosibles = ["./page/", "./php/", "./upload/", "./routes/", "./vistas/"];
+        $directoriosPosibles = ["./doc/", "./page/", "./php/", "./upload/", "./routes/", "./vistas/"];
         $encontrado = false;
 
         foreach ($directoriosPosibles as $directorio) {

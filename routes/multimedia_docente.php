@@ -92,7 +92,7 @@
                             </div>
                             
                             <div class="column is-flex is-justify-content-flex-end">
-                                <div>
+                                <!--<div>
                                     <label> &nbsp; Tipo de Archivo <b class="asterisco">*</b></label><br>
                                         
                                     <div class="select is-rounded">
@@ -103,13 +103,13 @@
                                             <option> <p class="option"> Videos </p> </option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
+                                <a href="index.php?vista=home" class="button is-dark mt-4"> Salir </a>
                             </div>
                         </div>
                         <p class="has-text-centered">
                             <button type="submit" class="button is-primary is-rounded mt-3 mb-2"> Subir Archivo </button>
-                        </p>
-                    
+                        </p>                    
                 </div>
             </div>
         </div>
@@ -129,17 +129,6 @@
                         </div>
                     </div>
                     <input type="hidden" name="quill_content" id="quillContent" />
-                </div>
-            
-                
-                <div class="botones">
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-row botones_fijos">
-                            <a href="index.php?vista=eliminar_archivo" class="button is-link eliminar">Eliminar</a>
-                            <a href="index.php?vista=home" class="button is-dark is-rounded">Salir</a>
-                        </div>
-                    </div>
-                    <div class="form-rest mt-6"></div>
                 </div>
             </div>
         </div>

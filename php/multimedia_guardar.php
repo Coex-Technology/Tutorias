@@ -10,7 +10,8 @@
     $hora_eliminacion = limpiar_cadena($_POST['hora_eliminacion']);
     $fecha_eliminacion = limpiar_cadena($_POST['fecha_eliminacion']);
 
-    $formulario_tipo_archivo = limpiar_cadena($_POST['formulario_tipo_archivo']);
+    #$formulario_tipo_archivo = limpiar_cadena($_POST['formulario_tipo_archivo']);
+    $formulario_tipo_archivo = "Imagenes";
     $comentarios = limpiar_cadena($_POST["quill_content"]);
     $usuarios_ci = limpiar_cadena($_POST['usuarios_ci']);
 

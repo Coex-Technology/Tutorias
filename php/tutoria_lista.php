@@ -1,12 +1,26 @@
 <?php
-	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-	$tabla="";
-	$ci_usuario = $_SESSION['ci'];
-	$colspan = 9;
 	$pagina_actual = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	$home = (stripos($pagina_actual, 'home') !== false);
 	$tutorship_list = stripos($pagina_actual, 'tutorship_list') !== false;
 	$historial_tutorias = stripos($pagina_actual, 'historial_tutorias') !== false;
+
+	if($home){
+		$registros = 3;
+	}else{
+		$registros = 99;
+	}
+		
+	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
+	$tabla="";
+	$ci_usuario = $_SESSION['ci'];
+	$colspan = 9;
+
+	if($home)
+		$url = "index.php?vista=home&page=";
+	if($tutorship_list)
+		$url = "index.php?vista=home&page=";
+	if($historial_tutorias)
+		$url = "index.php?vista=tutorship_list";
 
 	$administrador = $_SESSION['usuarios_tipos_id'] == 1;
 	$docente = $_SESSION['usuarios_tipos_id'] == 2;
@@ -52,8 +66,7 @@
 			FROM tutorias
 			JOIN usuarios ON tutorias.administrador_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa
-			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
+			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa;";	
 
 
 
@@ -89,8 +102,7 @@
 			FROM tutorias
 			JOIN usuarios ON tutorias.docente_ci = usuarios.ci
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa
-			ORDER BY nombre ASC LIMIT $inicio, $registros;";
+			WHERE usuarios.ci = $ci_usuario AND tutorias.activa = $consulta_activa;";
 
 
 	}elseif($estudiante){
@@ -130,8 +142,7 @@
 			JOIN usuarios ON tutorias_estudiantes.estudiantes_ci = usuarios.ci
 			JOIN tutorias ON tutorias_estudiantes.tutorias_id = tutorias.id
 			JOIN tutorias_tipos ON tutorias.tutorias_tipos_id = tutorias_tipos.id
-			WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario AND tutorias.activa = $consulta_activa
-			ORDER BY nombre ASC LIMIT $inicio, $registros;";	
+			WHERE tutorias_estudiantes.estudiantes_ci = $ci_usuario AND tutorias.activa = $consulta_activa;";	
 
 	}
 
@@ -145,6 +156,19 @@
 	$total = (int) $total->fetchColumn();
 	$Npaginas = ceil($total/$registros);
 
+	if($home){
+		if(!isset($_GET['page'])){
+			$pagina=1;
+		}else{
+			$pagina=(int) $_GET['page'];
+			if($pagina<=1){
+				$pagina=1;
+			}
+		}
+	}
+	
+
+	
 	$tabla.='
 		<style>
 		.table.is-fullwidth {
@@ -355,30 +379,59 @@
 		if($home)
 			$colspan = 7;
 
-		if($total>=1){
-			$tabla.='
-				<tr class="has-text-centered" >
-					<td colspan='.$colspan.'>
-						<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
-							Haga clic acá para recargar el listado
-						</a>
-					</td>
-				</tr>
-			';
+		if(!($historial_tutorias)){
+			if($total>=1){
+				$tabla.='
+					<tr class="has-text-centered" >
+						<td colspan='.$colspan.'>
+							<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
+								Haga clic acá para recargar el listado
+							</a>
+						</td>
+					</tr>
+				';
+			}else{
+				$tabla.='
+					<tr class="has-text-centered" >
+						<td colspan='.$colspan.'>
+							<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
+							<a href="index.php?vista=user_new" class="button is-link is-rounded is-small mt-4 mb-4">
+								Haga clic aquí para agregarlo
+							</a>
+							<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
+								O aquí para ver el historial de usuarios
+							</a>
+						</td>
+					</tr>
+				';
+			}
+
 		}else{
-			$tabla.='
-				<tr class="has-text-centered" >
-					<td colspan='.$colspan.'>
-						<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
-						<a href="index.php?vista=user_new" class="button is-link is-rounded is-small mt-4 mb-4">
-							Haga clic aquí para agregarlo
-						</a>
-						<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
-							O aquí para ver el historial de usuarios
-						</a>
-					</td>
-				</tr>
-			';
+			if($total>=1){
+				$tabla.='
+					<tr class="has-text-centered" >
+						<td colspan='.$colspan.'>
+							<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
+								Haga clic acá para recargar el listado
+							</a>
+						</td>
+					</tr>
+				';
+			}else{
+				$tabla.='
+					<tr class="has-text-centered" >
+						<td colspan='.$colspan.'>
+							<p> No hay tutorías archivadas, si lo desea puede </p>
+							<a href="index.php?vista=tutorship_list" class="button is-link is-rounded is-small mt-4 mb-4 mr-2">
+								Listar las tutorías ingresadas
+							</a>
+							<a href="index.php?vista=tutorship_new" class="button is-link is-rounded is-small mt-4 mb-4 ml-2">
+								O crear una nueva tutoría
+							</a>
+						</td>
+					</tr>
+				';
+			}
 		}
 	}
 
@@ -394,9 +447,12 @@
 	echo $tabla;
 	echo "<br>";
 
-	if($total>=1 && $pagina<=$Npaginas){
-		echo paginador_tablas($pagina,$Npaginas,$url,7);
+	if(!($tutorship_list || $historial_tutorias)){
+		if($total>=1 && $pagina<=$Npaginas){
+			echo paginador_tablas($pagina,$Npaginas,$url,5);
+		}
 	}
+	
 
 	if($tutorship_list || $historial_tutorias)
         echo "<br> <br>";

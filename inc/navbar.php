@@ -73,7 +73,7 @@
               <div class="navbar-dropdown">
                   <?php
                     if($usuario != ""){
-                      if($usuario == 1 || $usuario == 2)
+                      if($usuario == 2)
                         echo '<a href="index.php?vista=multimedia" class="navbar-item menu"> Agregar Multimedia </a>';
                     }
                   ?>

@@ -1,43 +1,61 @@
 <?php
 
 	/*Almacenando datos*/
-    $tutoria_id_delete=limpiar_cadena($_GET['tutoria_id_delete']);
+    $id=limpiar_cadena($_GET['id']);
+	$activa="No Activa";
 
     /*Verificando tutoria*/
     $check_tutoria=conexion();
-    $check_tutoria=$check_tutoria->query("SELECT id FROM tutorias WHERE id='$tutoria_id_delete'");
+    $check_tutoria=$check_tutoria->query("SELECT id FROM tutorias WHERE id='$id'");
     
     if($check_tutoria->rowCount()==1){
 	
-	    $eliminar_tutoria=conexion();
-	    $eliminar_tutoria=$eliminar_tutoria->prepare("DELETE FROM tutorias WHERE id=:id");
+	    $archivar_tutoria=conexion();
+	    $archivar_tutoria=$archivar_tutoria->prepare("UPDATE tutorias SET activa=:activa WHERE id=:id");
+		
+		$marcadores = [
+			":activa" => $activa,
+			":id" => $id,
+		];
+	    $archivar_tutoria->execute($marcadores);
 
-	    $eliminar_tutoria->execute([":ci"=>$tutoria_id_delete]);
+		$check_tutoria2=conexion();
+    	$check_tutoria2=$check_tutoria2->query("SELECT id FROM tutorias WHERE id='$id'");
 
-	    if($eliminar_tutoria->rowCount()==1){
+		$archivar_tutoria=null;
+
+		/* 
+	    if($check_tutoria2->rowCount()==1){
 		    echo '
 		        <div class="notification is-info is-light">
-		            <strong>¡TUTORÍA ELIMINADA!</strong><br>
-		            Los datos de la tutoría se eliminaron con exito
+		            <strong>¡TUTORÍA ARCHIVADA!</strong><br>
+		            Los datos de la tutoría se archivaron con exito <br>
+					Puede seguir visualizandola en esta sección
+					<a href="index.php?vista=historial_tutorias&id='.$id.'"></a>
 		        </div>
 		    ';
 		}else{
 		    echo '
 		        <div class="notification is-danger is-light">
 		            <strong>¡Ocurrio un error inesperado!</strong><br>
-		            No se pudo eliminar la tutoría, por favor intente nuevamente
+		            No se pudo archivar la tutoría, por favor intente nuevamente
 		        </div>
 		    ';
 		}
-		$eliminar_tutoria=null;
-    }else{
+		*/
+    }
+	/*
+	else{
+		
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                La TUTORÍA que intenta eliminar no existe
+                La TUTORÍA que intenta archivar no existe
             </div>
         ';
-
     }	
+	*/
     $check_tutoria=null;
+
+	echo "<script> window.location.href='index.php?vista=home'; </script>";
 ?>

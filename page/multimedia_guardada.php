@@ -229,22 +229,15 @@
         echo '
             <div class="container is-fluid mt-5 mb-4">
                 <h1 class="title"> Materiales </h1>
-                <h2 class="subtitle"> Material Subido a la Tutoría<br> '.$grupo.' </h2>
+                <h2 class="subtitle"> Historial de los Materiales Subidos a <br> '.$grupo.' </h2>
             </div>
-            
 
-            <div class="container "> 
+            <div class="container pt-3"> 
         ';
 
-        echo '<div class="mb-6">
-            <p class="has-text-right">
-                <a href="index.php?vista=home" class="button is-link is-rounded btn-back"><- Regresar </a>
-            </p>
-            <p class="has-text-left">
-                <a href="index.php?vista=multimedia_guardada&id='.$tutorias_id.'&sel=true" class="button is-success is-rounded btn-back is-small"> Consultar Archivos Subidos </a>
-            </p>
-        </div>';
-
+        echo '<p class="has-text-right">
+                <a href="index.php?vista=multimedia_subida&id='.$tutorias_id.'" class="button is-link is-rounded btn-back"><- Regresar </a>
+            </p>';
 
 
         $verificar_id = "SELECT COUNT(id) FROM tutorias WHERE id = $tutorias_id";
@@ -290,10 +283,14 @@
             FROM repositorios
             JOIN usuarios ON repositorios.usuarios_ci=usuarios.ci
             JOIN tutorias ON repositorios.tutorias_id=tutorias.id
-            WHERE tutorias_id = $tutorias_id AND repositorios.activo = 'Activo' ORDER BY repositorios.nombre ASC";
+            WHERE tutorias_id = $tutorias_id AND repositorios.activo = 'No Activo' ORDER BY repositorios.nombre ASC";
 
 
-            $consulta_total="SELECT COUNT(*) FROM repositorios WHERE tutorias_id = $tutorias_id AND activo = 'Activo'";
+            $consulta_total="SELECT COUNT(*)
+            FROM repositorios
+            JOIN usuarios ON repositorios.usuarios_ci=usuarios.ci
+            JOIN tutorias ON repositorios.tutorias_id=tutorias.id
+            WHERE tutorias_id = $tutorias_id AND repositorios.activo = 'No Activo'";
 
             $conexion=conexion();
             $datos = $conexion->query($consulta_datos);
@@ -341,9 +338,7 @@
                                 </p>
                                 </div>
                                 <div class="has-text-right">
-                                    <a href="index.php?vista=ver_archivo&archivo='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-success is-rounded is-small">Imagen</a>
-
-                                    <a href="'.$url.'&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
+                                    <a href="index.php?vista=multimedia_guardada&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
                                 </div>
                             </div>
                         </article>
@@ -384,7 +379,7 @@
         $usuarios_ci = $_GET['ci'];
         $tutorias_id = $_GET['id'];
 
-        $actualizar_repositorios = conexion()->prepare("UPDATE repositorios SET activo='No Activo'
+        $actualizar_repositorios = conexion()->prepare("UPDATE repositorios SET activo='Activo'
         WHERE id_archivo=:id_archivo AND usuarios_ci=:usuarios_ci AND tutorias_id=:tutorias_id");
 
         $marcadores = [

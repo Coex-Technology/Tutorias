@@ -354,9 +354,6 @@
 			echo $tabla3;
 			echo "<br>";
 		
-			// if($total>=0 && $pagina<=$Npaginas){
-			// 	echo paginador_tablas($pagina,$Npaginas,$url,7);
-			// }
 			
 		}else{
 			if($total>=1){
