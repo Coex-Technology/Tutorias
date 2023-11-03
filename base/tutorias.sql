@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2023 a las 19:07:19
+-- Tiempo de generación: 04-11-2023 a las 00:48:30
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -127,7 +127,8 @@ INSERT INTO `repositorios` (`id_archivo`, `usuarios_ci`, `tutorias_id`, `tema`, 
 (202310030449, 12345678, 12345674040800, 'Word Numero 2', 'Calendario_202310100459_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Textos', '2023-10-03', '04:49:00', '2023-11-03', '23:49:00', 'Activo'),
 (202310091055, 11111111, 11111111030625, 'Funciones', 'Funciones_202310091055_11111111_11111111030625.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-09', '10:55:00', '2023-11-05', '10:55:00', 'Activo'),
 (202310100459, 12345678, 12345674040800, 'Funciones', 'Calendario_202310100459_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-10', '04:59:00', '2023-11-05', '23:04:00', 'Activo'),
-(202310120022, 12345678, 12345674040800, 'Hola', 'Hola_202310120022_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '00:22:00', '2023-11-03', '00:22:00', 'Activo');
+(202310120022, 12345678, 12345674040800, 'Hola', 'Hola_202310120022_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '00:22:00', '2023-11-03', '00:22:00', 'Activo'),
+(202310120502, 12345678, 12345674061048, 'Archivo', 'Archivo_202310120502_12345678_12345674061048.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '05:02:00', '2023-11-05', '23:08:00', 'No Activo');
 
 -- --------------------------------------------------------
 
@@ -235,7 +236,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ci`, `clave`, `nombre`, `apellido`, `direccion`, `registrado`, `activo`, `usuarios_tipos_id`) VALUES
-(11111111, '$2y$10$8Xp3OXSMgaGTLFF7Y4Og2OR/E/Ki0ByWoypxm5ridRqcsCnKxmJ2u', 'Lucía', 'Perez', 'Florida Cowork', 'Registrado', 'Activo', 2),
+(11111111, '$2y$10$8Xp3OXSMgaGTLFF7Y4Og2OR/E/Ki0ByWoypxm5ridRqcsCnKxmJ2u', 'Lucía', 'Perez', 'Florida Cowork', 'Registrado', 'No Activo', 2),
 (12345673, '$2y$10$EEZb7WR8zu/UW7XoRoIzveZ/Gb.ovAr1iaqes4lTTfgELcrF0NZcS', 'Nicolás', 'Rodríguez', 'en mi casa', 'Registrado', 'No Activo', 2),
 (12345674, '$2y$10$kz5zOKABrIrhLBHaSpqS4ewzjTHEd7o1hidLNlggPZ/d.wesC.dIC', 'Facundo', 'Martínez', 'Florida Cowork', 'Registrado', 'No Activo', 2),
 (12345677, '$2y$10$9sGDldX4S50BKqutRU4yPuggYONrZSdQZdahuMcvLH1.MNlBjQp8i', 'Juan', 'Torres', 'Florida Cowork', 'No Registrado', 'No Activo', 2),
