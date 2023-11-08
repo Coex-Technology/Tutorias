@@ -4,9 +4,9 @@
 
     if(!(isset($_GET['id']) && isset($_GET['id']) != "")){
         echo '
-            <div class="container is-fluid mt-5 mb-4">
-                <h1 class="title"> Asistencia </h1>
-                <h2 class="subtitle"> Pasar Lista </h2>
+            <div class="container is-fluid mb-4">
+                <h1 class="title"> Horarios de Tutorías </h1>
+                <h2 class="subtitle"> Escoger tutoría </h2>
             </div>
 
             <div class="container pt-3 b barra_asistencia"> 
