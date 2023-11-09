@@ -341,15 +341,17 @@
                                 </p>
                                 </div>
                                 <div class="has-text-right">
-                                    <a href="index.php?vista=ver_archivo&archivo='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-success is-rounded is-small">Imagen</a>
+                                    <a href="index.php?vista=ver_archivo&archivo='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-success is-rounded is-small">Imagen</a>';
 
-                                    <a href="'.$url.'&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
+                    if($_SESSION['usuarios_tipos_id'] != 3)
+                        $tabla.='
+                                        <a href="'.$url.'&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
 
-                        <hr>
-                    ';
+                            <hr>
+                        ';
                     $contador++;
                 }
                 $pag_final=$contador-1;
