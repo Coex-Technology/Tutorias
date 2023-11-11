@@ -58,10 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var guardarButton = document.querySelector(".button.is-danger.is-rounded");
   var guardarText = document.querySelector(".guardar");
 
-  // Almacena el texto original del párrafo
   var textoOriginal = guardarText.textContent;
 
-  // Agrega un manejador de eventos para habilitar o deshabilitar el botón
   document.querySelectorAll(".dropdown-item").forEach(function (item) {
     item.addEventListener("click", function () {
 
@@ -69,12 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
       guardarButton.classList.remove("is-danger");
       guardarButton.classList.add("is-info");
 
-      // Habilita el botón cuando se selecciona una opción
       guardarButton.disabled = false;
     });
   });
 
-  // También puedes deshabilitar el botón inicialmente
   guardarButton.disabled = true;
 });
 

@@ -4,6 +4,7 @@
 	$pagina_actual = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	$user_list = stripos($pagina_actual, 'user_list') !== false;
 	$historial_usuarios = stripos($pagina_actual, 'historial_usuarios') !== false;
+	$estudiante = $_SESSION['usuarios_tipos_id'] == 3;
 
 	$conexion=conexion();
 
@@ -43,7 +44,7 @@
 		if(stripos($pagina_actual, 'user_list') !== false){
 			$consulta_datos = "SELECT * FROM usuarios JOIN contactos ON usuarios.ci = contactos.ci WHERE usuarios.ci != '".$_SESSION['ci']."' AND usuarios.activo = 'Activo' ORDER BY usuarios.ci ASC LIMIT $inicio, $registros";
 
-			$consulta_total = "SELECT COUNT(usuarios.ci) FROM usuarios JOIN contactos ON usuarios.ci = contactos.ci WHERE usuarios.ci != '".$_SESSION['ci']."'";
+			$consulta_total = "SELECT COUNT(usuarios.ci) FROM usuarios JOIN contactos ON usuarios.ci = contactos.ci WHERE usuarios.ci != '".$_SESSION['ci']."' AND usuarios.activo = 'Activo'";
 		
 
 		}elseif(stripos($pagina_actual, 'historial_usuarios') !== false){
@@ -83,6 +84,19 @@
 			<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 				<thead>';
 
+	if($user_list && $estudiante){	
+		$tabla.='
+				<tr class="has-text-centered is-vcentered tabla_encabezado">
+					<th colspan="7"> <p class="tabla_titulo"> Registrados en el Sistema </p> </th>
+				</tr>';
+	}
+	if($user_list && !$estudiante){	
+		$tabla.='
+				<tr class="has-text-centered is-vcentered tabla_encabezado">
+					<th colspan="9"> <p class="tabla_titulo"> Registrados en el Sistema </p> </th>
+				</tr>';
+	}
+
 	if($historial_usuarios){	
 		$tabla.='
 				<tr class="has-text-centered is-vcentered tabla_encabezado">
@@ -101,23 +115,24 @@
                     <th class="tabla_texto"> Tipo de Usuario </th>
 					';
 
+	if(!$estudiante){
+		if($user_list){
+			$tabla.='
+							<th class="tabla_texto" colspan="2">Opciones</th>
+						</tr>
+					</thead>
+					<tbody>
+			';
+		}
 
-	if($user_list){
-		$tabla.='
-						<th colspan="2">Opciones</th>
-					</tr>
-				</thead>
-				<tbody>
-		';
-	}
-
-	if($historial_usuarios){
-		$tabla.='
-						<th colspan="1">Opciones</th>
-					</tr>
-				</thead>
-				<tbody>
-		';
+		if($historial_usuarios){
+			$tabla.='
+							<th colspan="1">Opciones</th>
+						</tr>
+					</thead>
+					<tbody>
+			';
+		}
 	}
 
 	if($total>=1 && $pagina<=$Npaginas){
@@ -178,24 +193,26 @@
                     <td>'.$direccion.'</td>
                     <td>'.$usuarios_tipos_id.'</td>';
 
-			if($user_list){
-				$tabla.='
-						<td>
-							<a href="index.php?vista=user_update&user_ci_up='.$rows['ci'].'" class="button is-success is-rounded is-small"> Actualizar </a>
-						</td>
-						<td>
-							<a href="'.$url.$pagina.'&user_ci_del='.$rows['ci'].'" class="button is-danger is-rounded is-small"> Archivar </a>
-						</td>
-					</tr>
-				';
-			}
-			if($historial_usuarios){
-				$tabla.='
-						<td>
-							<a href="'.$url.$pagina.'&user_ci='.$rows['ci'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
-						</td>
-					</tr>
-				';
+			if(!$estudiante){
+				if($user_list){
+					$tabla.='
+							<td>
+								<a href="index.php?vista=user_update&user_ci_up='.$rows['ci'].'" class="button is-success is-rounded is-small"> Actualizar </a>
+							</td>
+							<td>
+								<a href="'.$url.$pagina.'&user_ci_del='.$rows['ci'].'" class="button is-danger is-rounded is-small"> Archivar </a>
+							</td>
+						</tr>
+					';
+				}
+				if($historial_usuarios){
+					$tabla.='
+							<td>
+								<a href="'.$url.$pagina.'&user_ci='.$rows['ci'].'" class="button is-success is-rounded is-small"> Dar de Alta </a>
+							</td>
+						</tr>
+					';
+				}
 			}
 			$contador++;
 		}

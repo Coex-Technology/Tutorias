@@ -137,6 +137,10 @@ td {
     max-width: 63vh;
 }
 
+.margen_register{
+    margin-left: 20vh !important;
+}
+
 /* login */
 
 .login_fondo {
