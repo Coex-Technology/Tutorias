@@ -508,13 +508,13 @@
                             <div class="column">
                                 <div class="control">
                                     <label> Asistencias Justificadas </label>
-                                    <input class="input" type="number" name="inasistencias_justificadas" pattern="[0-9]" value="<?php echo $inasistencias_justificadas?>">
+                                    <input class="input" type="number" name="inasistencias_justificadas" pattern="[0-9]{1,3}" max="999" value="<?php echo $inasistencias_justificadas?>">
                                 </div>
                             </div>
                             <div class="column">
                                 <div class="control">
                                     <label> Asistencias Injustificadas </label>
-                                    <input class="input" type="number" name="inasistencias_injustificadas" pattern="[0-9]" value="<?php echo $inasistencias_injustificadas?>">
+                                    <input class="input" type="number" name="inasistencias_injustificadas" pattern="[0-9]{1,3}" max="999" value="<?php echo $inasistencias_injustificadas?>">
                                 </div>
                             </div>
                         </div>

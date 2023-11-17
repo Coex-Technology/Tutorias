@@ -41,7 +41,7 @@
 
 
     /* Verificando integridad de los datos */
-    if (verificar_datos("[0-9]", $inasistencias_justificadas)) {
+    if (verificar_datos("[0-9]{1,3}", $inasistencias_justificadas)) {
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrió un error inesperado!</strong><br>
@@ -52,7 +52,7 @@
     }
 
 
-    if (verificar_datos("[0-9]", $inasistencias_injustificadas)) {
+    if (verificar_datos("[0-9]{1,3}", $inasistencias_injustificadas)) {
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrió un error inesperado!</strong><br>
