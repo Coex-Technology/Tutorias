@@ -14,7 +14,7 @@
 		}
 	}
 	
-	
+
 	# Verificar datos #
 	function verificar_datos($filtro, $cadena){
 		if(preg_match("/^".$filtro."$/", $cadena)){
@@ -24,7 +24,7 @@
 		}
 	}
 	
-
+	
 	# Limpiar cadenas de texto #
 	function limpiar_cadena($cadena){
 		$cadena=trim($cadena);
