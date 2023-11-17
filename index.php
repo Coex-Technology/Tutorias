@@ -11,6 +11,7 @@
         session_start();
         $url = $_SERVER['REQUEST_URI'];
         $ultimo_igual = substr(strrchr($url, '='), 1);
+        include "./inc/head.php";
 
         if($ultimo_igual == "")
             echo '<script>window.location.href = "index.php?vista=login";</script>';
