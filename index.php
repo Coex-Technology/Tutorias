@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <title>EduTutor</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    
-    <?php require "./inc/session_start.php"; 
-
+    <?php
+        session_name("ST");
+        session_start();
         $url = $_SERVER['REQUEST_URI'];
         $ultimo_igual = substr(strrchr($url, '='), 1);
-
-        if($ultimo_igual == ""){
-            echo '<script>window.location.href = "index.php?vista=login";</script>';
-            
-        }
-
         include "./inc/head.php";
 
-        if (empty($_GET['vista'])) {
+        if($ultimo_igual == "")
+            echo '<script>window.location.href = "index.php?vista=login";</script>';
+        
+        if (empty($_GET['vista']))
             $_GET['vista'] = "login";
-        }
 
         $vista = $_GET['vista'] . ".php";
         $directoriosPosibles = ["./doc/", "./page/", "./php/", "./upload/", "./routes/", "./vistas/"];
@@ -35,23 +32,17 @@
                     exit();
                 }
             }
-            
-            if (is_file($rutaArchivo)) {
+            if(is_file($rutaArchivo)) {
                 if($_GET['vista'] != "login" && $_GET['vista'] != "register")
-                include "./inc/navbar.php";
-
+                    include "./inc/navbar.php";
                 include $rutaArchivo;
                 include "./inc/script.php";
                 $encontrado = true;
                 break;
             }
         }
-
-        if (!$encontrado) {
+        if (!$encontrado)
             include "404.html";
-        }
-
     ?>
-
 </body>
 </html>

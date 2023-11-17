@@ -14,7 +14,6 @@
 		}
 	}
 	
-
 	
 	# Verificar datos #
 	function verificar_datos($filtro, $cadena){
@@ -25,7 +24,6 @@
 		}
 	}
 	
-
 
 	# Limpiar cadenas de texto #
 	function limpiar_cadena($cadena){
