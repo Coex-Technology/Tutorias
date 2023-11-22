@@ -458,7 +458,9 @@
 
 	$conexion=null;
 	echo $tabla;
-	echo "<br>";
+
+	if(!($home))
+		echo "<br>";
 
 	if(!($tutorship_list || $historial_tutorias)){
 		if($total>=1 && $pagina<=$Npaginas){

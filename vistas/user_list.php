@@ -18,7 +18,7 @@
         echo '
             <div class="container is-fluid mb-6">
                 <h1 class="title"> Usuarios </h1>
-                <h2 class="subtitle"> Lista </h2>
+                <h2 class="subtitle"> Lista Completa </h2>
             </div>
         <div class="container">';
 
@@ -42,7 +42,7 @@
 
     $pagina=limpiar_cadena($pagina);
     $url="index.php?vista=user_list&page=";
-    $registros=7;
+    $registros=6;
     $busqueda="";
 
     # Paginador usuario #

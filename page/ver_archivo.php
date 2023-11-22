@@ -1,6 +1,6 @@
 <div class="container is-fluid">
 	<h1 class="title"> Materiales</h1>
-	<h2 class="subtitle"> Visualizar Archivo Subido </h2>
+	<h2 class="subtitle"> Vista Previa del Archivo </h2>
 </div>
 
 <div class="container pb-6">

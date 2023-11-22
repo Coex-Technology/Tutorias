@@ -74,7 +74,7 @@
                 </div>
             </section>
 
-            <section class="column is-three-quarters bajar_tabla_tutorias container">
+            <section class="column is-three-quarters bajar_tabla_tutorias margen_superior_home container">
 
                 <?php include_once "tutorship_list.php"; ?>
 
