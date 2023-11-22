@@ -51,24 +51,23 @@
             </span>
             Buscar Estudiantes
         </a>
-        <a href="index.php?vista=consult_attendance" class="panel-block">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Asistencia de los Estudiantes
-        </a>
-
-    </div>
-
-    <div class="panel-block hidden-opciones" data-option="docente">
-        
-        <a href="index.php?vista=historial_usuarios" class="panel-block is-active">
+        <a href="index.php?vista=historial_usuarios" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
             </span>
             Historial de Usuarios
         </a>
 
+    </div>
+
+    <div class="panel-block hidden-opciones" data-option="docente">
+        
+        <a href="index.php?vista=consult_attendance" class="panel-block is-active">
+            <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+            Consultar Asistencia Ingresada
+        </a>
         <a href="index.php?vista=multimedia_subida" class="panel-block">
             <span class="panel-icon">
             <i class="fas fa-book" aria-hidden="true"></i>
