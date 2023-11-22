@@ -345,7 +345,7 @@
 
                     if($_SESSION['usuarios_tipos_id'] != 3)
                         $tabla.='
-                                        <a href="'.$url.'&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-danger is-rounded is-small">Eliminar</a>
+                                        <a href="'.$url.'&archivo_borrar='.$rows['archivo_id'].'&id='.$rows['tutorias_id'].'&ci='.$rows['usuarios_ci'].'" class="button is-danger is-rounded is-small">Archivar</a>
                                     </div>
                                 </div>
                             </article>
