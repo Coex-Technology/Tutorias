@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2023 a las 23:38:55
+-- Tiempo de generación: 17-11-2023 a las 20:34:26
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -42,28 +42,28 @@ CREATE TABLE `asistencias` (
 --
 
 INSERT INTO `asistencias` (`tutorias_id`, `estudiantes_ci`, `fecha`, `docente_ci`, `fecha_ingreso`, `inasistencias_justificadas`, `inasistencias_injustificadas`) VALUES
-(11111111030625, 22222222, '2023-06-14', 11111111, '2023-11-02', 1, 3),
-(11111111030625, 22222222, '2023-07-13', 11111111, '2023-11-02', 12, 10),
+(11111111030625, 22222222, '2023-07-13', 11111111, '2023-11-02', 1, 12),
 (11111111030625, 22222222, '2023-11-01', 11111111, '2023-11-01', 0, 0),
-(11111111030625, 22222222, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
+(11111111030625, 22222222, '2023-11-04', 11111111, '2023-10-31', 2, 3),
 (11111111030625, 22222222, '2023-11-05', 11111111, '2023-11-02', 20, 0),
 (11111111030625, 22222222, '2023-11-08', 11111111, '2023-11-08', 1, 0),
+(11111111030625, 22222222, '2023-11-09', 11111111, '2023-11-09', 2, 0),
 (11111111030625, 22222222, '2023-11-11', 11111111, '2023-11-02', 0, 4),
 (11111111030625, 22222222, '2023-11-17', 11111111, '2023-11-02', 0, 0),
 (11111111030625, 22222222, '2023-11-26', 11111111, '2023-11-01', 1, 2),
-(11111111030625, 54893231, '2023-07-13', 11111111, '2023-11-02', 2, 23),
+(11111111030625, 54893231, '2023-07-13', 11111111, '2023-11-02', 1, 3),
 (11111111030625, 54893231, '2023-11-01', 11111111, '2023-11-01', 0, 0),
 (11111111030625, 54893231, '2023-11-05', 11111111, '2023-11-02', 20, 0),
 (11111111030625, 54893231, '2023-11-08', 11111111, '2023-11-08', 1, 2),
 (11111111030625, 54893231, '2023-11-17', 11111111, '2023-11-02', 0, 0),
 (11111111030625, 54893231, '2023-11-26', 11111111, '2023-11-01', 0, 0),
 (11111111030625, 54893232, '2023-11-01', 11111111, '2023-11-01', 0, 0),
-(11111111030625, 54893232, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
+(11111111030625, 54893232, '2023-11-04', 11111111, '2023-10-31', 1, 3),
 (11111111030625, 54893232, '2023-11-05', 11111111, '2023-11-02', 20, 1),
-(11111111030625, 54894723, '2023-10-05', 11111111, '2023-10-31', 1, 7),
 (11111111030625, 54894723, '2023-11-04', 11111111, '2023-10-31', 1, NULL),
 (11111111030625, 54894723, '2023-11-08', 11111111, '2023-11-08', 1, 1),
 (11111111030625, 111111111, '2023-11-08', 11111111, '2023-11-08', 0, 2),
+(11111111030625, 111111111, '2023-11-09', 11111111, '2023-11-09', 0, 2),
 (12345674061048, 22222222, '2023-11-12', 11111111, '2023-11-02', 1, 3),
 (12345674061048, 54894723, '2023-11-12', 11111111, '2023-11-02', 4, 1);
 
@@ -100,7 +100,8 @@ INSERT INTO `contactos` (`ci`, `telefono`, `email`) VALUES
 (111111111, 98123456, 'sass@gmail.com'),
 (111111112, 97123456, 'sass@gmail.com'),
 (111111112, 98123456, 'santiagobrignoni@gmail.com'),
-(111111112, 98123457, 'sasss@gmail.com');
+(111111112, 98123457, 'sasss@gmail.com'),
+(111111119, 922029022, 'santiagobrignoni@outlook.com');
 
 -- --------------------------------------------------------
 
@@ -132,7 +133,8 @@ INSERT INTO `repositorios` (`id_archivo`, `usuarios_ci`, `tutorias_id`, `tema`, 
 (202310091055, 11111111, 11111111030625, 'Funciones', 'Funciones_202310091055_11111111_11111111030625.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-09', '10:55:00', '2023-11-05', '10:55:00', 'Activo'),
 (202310100459, 12345678, 12345674040800, 'Funciones', 'Calendario_202310100459_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-10', '04:59:00', '2023-11-05', '23:04:00', 'Activo'),
 (202310120022, 12345678, 12345674040800, 'Hola', 'Hola_202310120022_12345678_12345674040800.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '00:22:00', '2023-11-03', '00:22:00', 'Activo'),
-(202310120502, 12345678, 12345674061048, 'Archivo', 'Archivo_202310120502_12345678_12345674061048.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '05:02:00', '2023-11-05', '23:08:00', 'No Activo');
+(202310120502, 12345678, 12345674061048, 'Archivo', 'Archivo_202310120502_12345678_12345674061048.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imágenes', '2023-10-12', '05:02:00', '2023-11-05', '23:08:00', 'No Activo'),
+(202311091215, 11111111, 11111111030625, 'Matematica', 'Matematica_202311091215_11111111_11111111030625.png', 'p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>p>br>/p>', 'Imagenes', '2023-11-09', '12:15:00', '2023-11-30', '15:14:00', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -161,12 +163,13 @@ CREATE TABLE `tutorias` (
 --
 
 INSERT INTO `tutorias` (`id`, `docente_ci`, `administrador_ci`, `grupo`, `descripcion`, `dias`, `fecha_inicial`, `fecha_final`, `hora_inicial`, `hora_final`, `activa`, `asignaturas_id`, `tutorias_tipos_id`) VALUES
-(11111111030625, 11111111, 12345678, '2°Bachillerato - Matemática', '[No se ha ingresado]', 'Viernes', '2023-03-03', '2023-05-12', '15:00:00', '16:30:00', 'Activa', NULL, 3),
+(11111111030625, 11111111, 12345678, '2°Bachillerato - Matemática', '[No se ha ingresado]', 'Viernes', '2023-03-03', '2023-05-12', '15:00:00', '16:30:00', 'No Activa', NULL, 3),
 (12345673020530, 12345673, 56274580, '1°Bachillerato -  Ingles', '[No se ha ingresado]', 'Lunes', '2023-10-09', '2023-10-23', '05:30:00', '07:00:00', 'Activa', NULL, 4),
 (12345673060555, 12345673, 56274580, '1°Ciclo Básico - Ciencias Físicas', '[No se ha ingresado]', 'Lunes', '2023-05-08', '2023-06-12', '14:10:00', '14:55:00', 'Activa', NULL, 3),
 (12345674040800, 12345674, 12345678, '3°Ciclo Básico - Idioma Español', '[No se ha ingresado]', 'Miércoles', '2023-10-04', '2023-10-18', '08:00:00', '09:15:00', 'Activa', NULL, 5),
 (12345674061048, 11111111, 12345678, '2°Ciclo Básico - Historia', '[No se ha ingresado]', 'Viernes', '2023-10-06', '2023-10-16', '14:10:00', '14:55:00', 'Activa', NULL, 6),
-(12345674071437, 12345674, 12345678, '3°Bachillerato - Sociología', '[No se ha ingresado]', 'Sábado', '2023-10-28', '2023-10-28', '19:45:00', '20:30:00', 'Activa', NULL, 5);
+(12345674071437, 12345674, 12345678, '3°Bachillerato - Sociología', '[No se ha ingresado]', 'Sábado', '2023-10-28', '2023-10-28', '19:45:00', '20:30:00', 'Activa', NULL, 5),
+(12345677021200, 12345677, 43030123, '3°Infomatica-Programacion', '[No se ha ingresado]', 'Lunes', '2023-11-06', '2023-11-13', '12:00:00', '14:00:00', 'Activa', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -185,8 +188,6 @@ CREATE TABLE `tutorias_estudiantes` (
 
 INSERT INTO `tutorias_estudiantes` (`tutorias_id`, `estudiantes_ci`) VALUES
 (11111111030625, 22222222),
-(11111111030625, 54893231),
-(11111111030625, 54894723),
 (11111111030625, 111111111),
 (12345674040800, 22222222),
 (12345674040800, 54893231),
@@ -246,15 +247,16 @@ INSERT INTO `usuarios` (`ci`, `clave`, `nombre`, `apellido`, `direccion`, `regis
 (12345677, '$2y$10$9sGDldX4S50BKqutRU4yPuggYONrZSdQZdahuMcvLH1.MNlBjQp8i', 'Juan', 'Torres', 'Florida Cowork', 'No Registrado', 'No Activo', 2),
 (12345678, '$2y$10$pAHDAxlfm3Gq.XXo5MbMVesfQ3OT2EcWWWIThc9xHgcN3hpdfbDj6', 'Santiago', 'Brignoni', 'Florida Cowork', 'Registrado', 'Activo', 1),
 (22222222, '$2y$10$sApQDWDwtu.It/v9rVufLeOkDzI6BptzywFRqDqhLwIcdM00FPkMG', 'Camila', 'Muñoz', 'Florida', 'Registrado', 'Activo', 3),
-(43030123, '$2y$10$WfCfhGYkBcCGkNeyoxHTm.43h9KCNuYzHcATdxEDstln70BZewd9W', 'Santino', 'Muñoz', 'Sarandi Grande', 'Registrado', 'Activo', 1),
-(54893231, '$2y$10$tw8sq7xMphDVet9pVsEWrO7H5GHrHPLEC0I5O1YvpEGCRTzNwnATG', 'Matias', 'Olivera', '25 de Mayo', 'Registrado', 'Activo', 3),
+(43030123, '$2y$10$WfCfhGYkBcCGkNeyoxHTm.43h9KCNuYzHcATdxEDstln70BZewd9W', 'Santino', 'Muñoz', 'Sarandi Grande', 'Registrado', 'No Activo', 1),
+(54893231, '$2y$10$tw8sq7xMphDVet9pVsEWrO7H5GHrHPLEC0I5O1YvpEGCRTzNwnATG', 'Matias', 'Olivera', '25 de Mayo', 'Registrado', 'No Activo', 3),
 (54893232, '$2y$10$smqXLS7xwuSX7yCsen0xhuIrhg45n74EWiWw154B/AmTkWHQ1MyWG', 'Camila', 'Perez', 'Cardal', 'Registrado', 'Activo', 3),
 (54894723, '$2y$10$Iz5e1Tmj9beEByLgMwf1XOOjw8vg.QY4y6h0VM5PqAH6rPz5ByAXa', 'Micaela', 'Vega', 'Sarandi Grande', 'Registrado', 'Activo', 3),
 (56274580, '$2y$10$poNInfvS9xfPFc6Alh7GAeHV3YHRnvQh8TcAo5.5fQF6069efl./K', 'Facundo', 'Vega', 'Florida Cowork', 'Registrado', 'Activo', 1),
 (92748293, '$2y$10$Q7gj4YBMg/R3seNL2nHasORENRNXpjE6MepKiJNyi4wYzJsTc0UQq', 'Juan', 'Fernadez', 'Florida', 'Registrado', 'Activo', 3),
 (111111110, '$2y$10$rSmo7cNz3JFjqEXh6PCL4eps3ntQIanmEo/ctmNZwIMT1QqlpTYve', 'akds', 'jwebda', 'Florida', 'Registrado', 'Activo', 2),
 (111111111, '$2y$10$CrkZ9zyy00UrOQbMEr0izOTc3XOYkyReGukXmhSEakDL8sHCEDUKm', 'Josefina', 'Casas', 'Florida Cowork', 'Registrado', 'Activo', 3),
-(111111112, '$2y$10$HAVt9LV7z6LvoUcw614aGuBeV6gLzmqOClSCUAvW31E4bNsSzMdu2', 'Coex', 'Technology', 'Florida Cowork', 'Registrado', 'Activo', 1);
+(111111112, '$2y$10$HAVt9LV7z6LvoUcw614aGuBeV6gLzmqOClSCUAvW31E4bNsSzMdu2', 'Coex', 'Technology', 'Florida Cowork', 'Registrado', 'Activo', 1),
+(111111119, '$2y$10$zTjsszD4KISULI/aNMPZheZV3CqZyBnsOx8Ztv/LinZH6tUCUe4L2', 'San', 'LOs', 'kkjsbkkss', 'Registrado', 'Activo', 0);
 
 -- --------------------------------------------------------
 
