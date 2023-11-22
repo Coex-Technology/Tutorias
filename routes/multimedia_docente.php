@@ -84,7 +84,7 @@
                                     <label class="file-label">
                                         <input class="file-input" type="file" name="formulario_archivo" accept=".jpg, .gif, .png">
                                         <span class="file-cta">
-                                            <span class="file-label" id="tipoSeleccionado"> Imágenes </span>
+                                            <span class="file-label" id="tipoSeleccionado"> Archivo </span>
                                         </span>
                                         <span class="file-name" id="tipoArchivo"> JPG, GIF, PNG (MAX 10MB) </span>
                                     </label>

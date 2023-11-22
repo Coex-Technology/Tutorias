@@ -1,6 +1,6 @@
 <div class="container is-fluid">
 	<h1 class="title"> Materiales</h1>
-	<h2 class="subtitle"> Actualizar Archivo Subido </h2>
+	<h2 class="subtitle"> Visualizar Archivo Subido </h2>
 </div>
 
 <div class="container pb-6">
@@ -47,9 +47,9 @@
 		<div class="column">
 			<div class="mb-6 has-text-centered FormularioAjax">
 
-				<h4 class="title is-4 mb-4"><?php echo $datos['tema']; ?></h4>
+				<h4 class="title is-4 mb-4"><?php echo "Tema: " . $datos['tema']; ?></h4>
 				
-				<label> Imagen Subida </label><br><br><br>
+				<label> Vista del Archivo Subido </label><br><br><br>
 
 				<input type="hidden" name="img_up_id" value="<?php echo $id_completo; ?>">
 
@@ -87,23 +87,24 @@
 						$datos = $datos->fetchAll();
 
 						foreach($datos as $rows){
-							$contador = 1;
-							$fecha_1 = $rows['fecha_visualizacion'];
-							$fecha_visualizacion = date("d/m/Y", strtotime($fecha_1));
-							$fecha_2 = $rows['fecha_eliminacion'];
-							$fecha_eliminacion = date("d/m/Y", strtotime($fecha_2));
-		
-							$hora_1 = $rows['hora_visualizacion'];
-							$hora_visualizacion = date("H:i", strtotime($hora_1));
-							$hora_2 = $rows['hora_eliminacion'];
-							$hora_eliminacion = date("H:i", strtotime($hora_2));
+							if($archivo_id == $rows['archivo_id']){
+								$contador = 1;
+								$fecha_1 = $rows['fecha_visualizacion'];
+								$fecha_visualizacion = date("d/m/Y", strtotime($fecha_1));
+								$fecha_2 = $rows['fecha_eliminacion'];
+								$fecha_eliminacion = date("d/m/Y", strtotime($fecha_2));
+			
+								$hora_1 = $rows['hora_visualizacion'];
+								$hora_visualizacion = date("H:i", strtotime($hora_1));
+								$hora_2 = $rows['hora_eliminacion'];
+								$hora_eliminacion = date("H:i", strtotime($hora_2));
 
-							echo '<p>
-								<strong> Subido por '.$rows['nombre'].' '.$rows['apellido'].'</strong><br>
-								<strong>Tema:</strong> '.$rows['tema'].'<br>
-								<strong>Subido el:</strong> '.$fecha_visualizacion.' al las '.$hora_visualizacion.'<br>
-								<strong>Se Elimina el:</strong> '.$fecha_eliminacion.' al las '.$hora_eliminacion.'<br>
-							</p>';
+								echo '<p>
+									<strong>Publicado por '.$rows['nombre'].' '.$rows['apellido'].'</strong><br>
+									<strong>Se subio el:</strong> '.$fecha_visualizacion.' al las '.$hora_visualizacion.'<br>
+									<strong>Se Elimina el:</strong> '.$fecha_eliminacion.' al las '.$hora_eliminacion.'<br>
+								</p>';
+							}
 						}
 					?>
 				</p>

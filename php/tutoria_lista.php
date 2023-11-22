@@ -191,12 +191,12 @@
 
 	if($home && $estudiante)
     $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
-						<th colspan="5"> <p class="tabla_titulo"> Tutorías </p> </th>
+						<th colspan="5"> <p class="tabla_titulo pt-1"> </p> </th>
 					</tr>';
 
 	if($home && !($estudiante))
     $tabla.='		<tr class="has-text-centered is-vcentered tabla_encabezado">
-						<th colspan="7"> <p class="tabla_titulo"> Tutorías </p> </th>
+						<th colspan="7"> <p class="tabla_titulo pt-1"> </p> </th>
 					</tr>';
 
 	if($tutorship_list && !($estudiante))

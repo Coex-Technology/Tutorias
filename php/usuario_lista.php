@@ -87,13 +87,13 @@
 	if($user_list && $estudiante){	
 		$tabla.='
 				<tr class="has-text-centered is-vcentered tabla_encabezado">
-					<th colspan="7"> <p class="tabla_titulo"> Registrados en el Sistema </p> </th>
+					<th colspan="7"> <p class="tabla_titulo"> Usuarios Registrados en el Sistema </p> </th>
 				</tr>';
 	}
 	if($user_list && !$estudiante){	
 		$tabla.='
 				<tr class="has-text-centered is-vcentered tabla_encabezado">
-					<th colspan="9"> <p class="tabla_titulo"> Registrados en el Sistema </p> </th>
+					<th colspan="9"> <p class="tabla_titulo"> Usuarios Registrados en el Sistema </p> </th>
 				</tr>';
 	}
 

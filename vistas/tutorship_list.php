@@ -22,7 +22,7 @@
         echo '            
             <div class="container is-fluid">
                 <h1 class="has-text-centered title"> Tutorías  </h1>
-                <h2 class="has-text-centered subtitle"> Lista de tutorías </h2>
+                <h2 class="has-text-centered subtitle"> Lista </h2>
             </div>             
         ';
 
