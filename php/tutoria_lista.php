@@ -228,7 +228,7 @@
 						<th class="tabla_texto"> Periodo </th>';
 
 
-	if($home && ($estudiante))
+	if($home && $estudiante && ($total>=1))
 	$tabla.='			<th class="tabla_texto"> Grupo </th>
 						<th class="tabla_texto"> Admin. </th>
 						<th class="tabla_texto"> Docente </th>
@@ -372,8 +372,10 @@
 		$pag_final=$contador-1;
 		
 	}else{
-		if($tutorship_list)
+		if($tutorship_list && !($estudiante))
 			$colspan = 11;
+		if($tutorship_list && $estudiante)
+			$colspan = 9;
 		if($historial_tutorias)
 			$colspan = 9;
 		if($home)
@@ -391,19 +393,30 @@
 					</tr>
 				';
 			}else{
-				$tabla.='
-					<tr class="has-text-centered" >
-						<td colspan='.$colspan.'>
-							<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
-							<a href="index.php?vista=user_new" class="button is-link is-rounded is-small mt-4 mb-4">
-								Haga clic aquí para agregarlo
-							</a>
-							<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
-								O aquí para ver el historial de usuarios
-							</a>
-						</td>
-					</tr>
-				';
+				if($estudiante){
+					$tabla.='
+						<tr class="has-text-centered" >
+							<td colspan='.$colspan.'>
+								<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
+								<p> Solicite a un administrador o docente referente que lo ingrese </p>
+							</td>
+						</tr>
+					';
+				}else{
+					$tabla.='
+						<tr class="has-text-centered" >
+							<td colspan='.$colspan.'>
+								<p> No hay tutorías relacionadas al usuario actual con la C.I. '.$ci_usuario.' </p>
+								<a href="index.php?vista=user_new" class="button is-link is-rounded is-small mt-4 mb-4">
+									Haga clic aquí para agregarlo
+								</a>
+								<a href="index.php?vista=historial_usuarios" class="button is-link is-rounded is-small mt-4 mb-4">
+									O aquí para ver el historial de usuarios
+								</a>
+							</td>
+						</tr>
+					';
+				}
 			}
 
 		}else{

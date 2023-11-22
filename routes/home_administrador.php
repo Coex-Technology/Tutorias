@@ -16,7 +16,6 @@
         <a data-toggle="tutorias" class="puntos_suspensivos"> Tutoría </a>
         <a data-toggle="estudiantes" class="puntos_suspensivos"> Estudiantes </a>
         <a data-toggle="docente" class="puntos_suspensivos"> Docente </a>
-        <a data-toggle="opciones" class="puntos_suspensivos"> Otros </a>
     </p>
 
 
@@ -62,17 +61,6 @@
     </div>
 
     <div class="panel-block hidden-opciones" data-option="docente">
-
-        <a href="index.php?vista=consult_attendance" class="panel-block is-active">
-            <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            Consultar asistencias
-        </a>
-
-    </div>
-
-    <div class="panel-block hidden-opciones" data-option="opciones">
         
         <a href="index.php?vista=historial_usuarios" class="panel-block is-active">
             <span class="panel-icon">
